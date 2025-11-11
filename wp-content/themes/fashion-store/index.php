@@ -5,12 +5,14 @@
     <div class="slide-1 home-slider">
         <div>
             <a href="category-page.html" class="home">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/full-banner/1.png" alt="" class="bg-img blur-up lazyload">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/full-banner/1.png" alt=""
+                    class="bg-img blur-up lazyload">
             </a>
         </div>
         <div>
             <a href="category-page.html" class="home">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/full-banner/2.png" alt="" class="bg-img blur-up lazyload">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/full-banner/2.png" alt=""
+                    class="bg-img blur-up lazyload">
             </a>
         </div>
     </div>
@@ -23,12 +25,14 @@
         <div class="row partition2">
             <div class="col-md-6">
                 <a href="category-page.html" class="collection-banner">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/banner/1.png" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/banner/1.png"
+                        class="img-fluid blur-up lazyload" alt="">
                 </a>
             </div>
             <div class="col-md-6">
                 <a href="category-page.html" class="collection-banner">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/banner/2.png" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/banner/2.png"
+                        class="img-fluid blur-up lazyload" alt="">
                 </a>
             </div>
         </div>
@@ -57,34 +61,39 @@
 <!-- Product slider -->
 <section class="section-b-space pt-0 ratio_asos">
     <div class="container">
-        <div class="g-3 g-md-4 row row-cols-2 row-cols-md-3 row-cols-xl-4">
+        <div class="row row-cols-2 row-cols-md-4 g-3">
             <?php
             $args = array(
                 'post_type' => 'product',
-                'posts_per_page' => -1
+                'posts_per_page' => 4
             );
             $query = new WP_Query($args);
 
-            if ($query->have_posts()) :
-                while ($query->have_posts()) : $query->the_post(); ?>
+            if ($query->have_posts()):
+                while ($query->have_posts()):
+                    $query->the_post();
+                    global $product; ?>
                     <div class="basic-product theme-product-1">
                         <div class="overflow-hidden">
-                            <div class="img-wrapper">
-                                <div class="ribbon"><span>Exclusive</span></div>
+                            <div class="img-wrapper position-relative">
+                                <?php if ($product && $product->is_on_sale()): ?>
+                                    <div class="ribbon"><span>Sale</span></div>
+                                <?php endif; ?>
 
                                 <a href="<?php the_permalink(); ?>">
-                                    <?php if (has_post_thumbnail()) : ?>
+                                    <?php if (has_post_thumbnail()): ?>
                                         <?php the_post_thumbnail('medium', ['class' => 'img-fluid blur-up lazyload', 'alt' => get_the_title()]); ?>
-                                    <?php else : ?>
-                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/no-image.jpg" class="img-fluid" alt="No image">
+                                    <?php else: ?>
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/no-image.jpg"
+                                            class="img-fluid" alt="No image">
                                     <?php endif; ?>
                                 </a>
 
                                 <?php
                                 // Nếu bạn có field 'rating' (ví dụ ACF)
                                 $rating = get_field('rating');
-                                if ($rating) :
-                                ?>
+                                if ($rating):
+                                    ?>
                                     <div class="rating-label">
                                         <i class="ri-star-fill"></i>
                                         <span><?php echo esc_html($rating); ?></span>
@@ -124,257 +133,58 @@
                                         </div>
                                     </div>
 
-                                    <?php
-                                    // Nếu bạn có ACF 'category' hoặc 'type'
-                                    $product_type = get_field('product_type');
-                                    if ($product_type) :
-                                    ?>
-                                        <h6><?php echo esc_html($product_type); ?></h6>
-                                    <?php endif; ?>
-
-                                    <?php
-                                    // Lấy giá và giá cũ từ ACF
-                                    $price = get_field('price');
-                                    $old_price = get_field('old_price');
-                                    if ($price) :
-                                    ?>
+                                    <?php if ($product): ?>
+                                        <?php
+                                        $regular_price = $product->get_regular_price();
+                                        $sale_price = $product->get_sale_price();
+                                        ?>
                                         <h4 class="price">
-                                            $<?php echo esc_html($price); ?>
-                                            <?php if ($old_price) : ?>
-                                                <del>$<?php echo esc_html($old_price); ?></del>
+                                            <?php if ($sale_price && $sale_price < $regular_price): ?>
+                                                $<?php echo number_format($sale_price, 2); ?>
+                                                <del>$<?php echo number_format($regular_price, 2); ?></del>
                                                 <span class="discounted-price">
                                                     <?php
-                                                    $discount = round((($old_price - $price) / $old_price) * 100);
-                                                    echo esc_html($discount); ?>% Off
+                                                    $discount = round((($regular_price - $sale_price) / $regular_price) * 100);
+                                                    echo esc_html($discount) . '% Off';
+                                                    ?>
                                                 </span>
+                                            <?php else: ?>
+                                                $<?php echo number_format($regular_price, 2); ?>
                                             <?php endif; ?>
                                         </h4>
                                     <?php endif; ?>
-                                </div>
 
+                                    <button class="btn btn-solid add-to-cart-btn ajax_add_to_cart mt-3"
+                                        data-product_id="<?php echo $product->get_id(); ?>" data-quantity="1"
+                                        title="Add to cart" style="width: 100%; border-radius: 8px;">
+                                        <i class="ri-shopping-cart-line"></i> Add to cart
+                                    </button>
+
+
+                                    <?php
+                                    // Nếu bạn có ACF 'category' hoặc 'type'
+                                    $product_type = get_field('product_type');
+                                    if ($product_type):
+                                        ?>
+                                        <h6><?php echo esc_html($product_type); ?></h6>
+                                    <?php endif; ?>
+                                </div>
                                 <ul class="offer-panel">
-                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time Offer: 5% off</li>
-                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time Offer: 5% off</li>
-                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time Offer: 5% off</li>
+                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time
+                                        Offer: 5% off</li>
+                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time
+                                        Offer: 5% off</li>
+                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time
+                                        Offer: 5% off</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-            <?php endwhile;
+                <?php endwhile;
             endif;
             wp_reset_postdata();
             ?>
-
-            <!-- <div>
-                <div class="basic-product theme-product-1">
-                    <div class="overflow-hidden">
-                        <div class="img-wrapper">
-                            <div class="ribbon"><span>Exclusive</span></div>
-                            <a href="product-page(image-swatch).html">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/1.jpg"
-                                    class="img-fluid blur-up lazyload" alt="">
-                            </a>
-                            <div class="rating-label"><i class="ri-star-fill"></i><span>4.5</span>
-                            </div>
-                            <div class="cart-info">
-                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                    <i class="ri-heart-line"></i>
-                                </a>
-                                <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                    <i class="ri-shopping-cart-line"></i>
-                                </button>
-                                <a href="#!" data-bs-toggle="modal" data-bs-target="#quickView" title="Quick View">
-                                    <i class="ri-eye-line"></i>
-                                </a>
-                                <a href="compare.html" title="Compare">
-                                    <i class="ri-loop-left-line"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-detail">
-                            <div>
-                                <div class="brand-w-color">
-                                    <a class="product-title" href="<?php echo get_permalink(95); ?>">
-                                        Glamour Gaze
-                                    </a>
-                                    <div class="color-panel">
-                                        <ul>
-                                            <li style="background-color: papayawhip;"></li>
-                                            <li style="background-color: burlywood;"></li>
-                                            <li style="background-color: gainsboro;"></li>
-                                        </ul>
-                                        <span>+2</span>
-                                    </div>
-                                </div>
-                                <h6>Boyfriend Shirts</h6>
-                                <h4 class="price">$ 2.79<del> $3.00 </del><span class="discounted-price"> 7% Off
-                                    </span>
-                                </h4>
-                            </div>
-                            <ul class="offer-panel">
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="basic-product theme-product-1">
-                    <div class="overflow-hidden">
-                        <div class="img-wrapper">
-                            <a href="product-page(accordian).html"><img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/2.jpg"
-                                    class="img-fluid blur-up lazyload" alt=""></a>
-                            <div class="rating-label"><i class="ri-star-s-fill"></i> <span>4.5</span>
-                            </div>
-                            <div class="cart-info">
-                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                    <i class="ri-heart-line"></i>
-                                </a>
-                                <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                    <i class="ri-shopping-cart-line"></i>
-                                </button>
-                                <a href="#!" data-bs-toggle="modal" data-bs-target="#quickView" title="Quick View">
-                                    <i class="ri-eye-line"></i>
-                                </a>
-                                <a href="compare.html" title="Compare">
-                                    <i class="ri-loop-left-line"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-detail">
-                            <div>
-                                <div class="brand-w-color">
-                                    <a class="product-title" href="product-page(accordian).html">
-                                        VogueVista
-                                    </a>
-
-                                </div>
-                                <h6>Classic Jacket</h6>
-                                <h4 class="price">$ 3.45 </h4>
-                            </div>
-                            <ul class="offer-panel">
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="basic-product theme-product-1">
-                    <div class="overflow-hidden">
-                        <div class="img-wrapper">
-                            <a href="product-page(accordian).html"><img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/3.jpg"
-                                    class="img-fluid blur-up lazyload" alt=""></a>
-                            <div class="rating-label"><i class="ri-star-s-fill"></i> <span>4.5</span>
-                            </div>
-                            <div class="cart-info">
-                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                    <i class="ri-heart-line"></i>
-                                </a>
-                                <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                    <i class="ri-shopping-cart-line"></i>
-                                </button>
-                                <a href="#!" data-bs-toggle="modal" data-bs-target="#quickView" title="Quick View">
-                                    <i class="ri-eye-line"></i>
-                                </a>
-                                <a href="compare.html" title="Compare">
-                                    <i class="ri-loop-left-line"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-detail">
-                            <div>
-                                <div class="brand-w-color">
-                                    <a class="product-title" href="product-page(accordian).html">
-                                        VogueVista
-                                    </a>
-                                    <div class="color-panel">
-                                        <ul>
-                                            <li style="background-color: papayawhip;"></li>
-                                            <li style="background-color: burlywood;"></li>
-                                            <li style="background-color: gainsboro;"></li>
-                                        </ul>
-                                        <span>+2</span>
-                                    </div>
-                                </div>
-                                <h6>Versatile Shacket</h6>
-                                <h4 class="price">$ 3.12</h4>
-                            </div>
-                            <ul class="offer-panel">
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="basic-product theme-product-1">
-                    <div class="overflow-hidden">
-                        <div class="img-wrapper">
-                            <div class="ribbon"><span>Exclusive</span></div>
-                            <a href="product-page(accordian).html"><img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/4.jpg"
-                                    class="img-fluid blur-up lazyload" alt=""></a>
-                            <div class="rating-label"><i class="ri-star-s-fill"></i> <span>4.5</span>
-                            </div>
-                            <div class="cart-info">
-                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                    <i class="ri-heart-line"></i>
-                                </a>
-                                <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                    <i class="ri-shopping-cart-line"></i>
-                                </button>
-                                <a href="#!" data-bs-toggle="modal" data-bs-target="#quickView" title="Quick View">
-                                    <i class="ri-eye-line"></i>
-                                </a>
-                                <a href="compare.html" title="Compare">
-                                    <i class="ri-loop-left-line"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-detail">
-                            <div>
-                                <div class="brand-w-color">
-                                    <a class="product-title" href="product-page(accordian).html">
-                                        Glamour Gaze
-                                    </a>
-
-                                </div>
-                                <h6>Chic Denim</h6>
-                                <h4 class="price">$ 5.19<del> $6.00 </del><span class="discounted-price"> 8% Off
-                                    </span>
-                                </h4>
-                            </div>
-                            <ul class="offer-panel">
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                                <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                    Limited Time Offer: 5% off</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </section>
@@ -384,7 +194,8 @@
 <!-- full banner -->
 <section class="pt-0">
     <a href="category-page.html">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/full-banner/3.png" alt="" class="img-fluid blur-up lazyload">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/full-banner/3.png" alt=""
+            class="img-fluid blur-up lazyload">
     </a>
 </section>
 <!-- full banner end -->
@@ -416,8 +227,7 @@
                                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/5.jpg"
                                                         class="img-fluid blur-up lazyload" alt="">
                                                 </a>
-                                                <div class="rating-label"><i
-                                                        class="ri-star-fill"></i><span>4.5</span>
+                                                <div class="rating-label"><i class="ri-star-fill"></i><span>4.5</span>
                                                 </div>
                                                 <div class="cart-info">
                                                     <a href="#!" title="Add to Wishlist" class="wishlist-icon">
@@ -439,8 +249,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Couture Edge
                                                         </a>
                                                         <div class="color-panel">
@@ -512,8 +321,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Glamour Gaze
                                                         </a>
                                                         <div class="color-panel">
@@ -650,8 +458,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Glamour Gaze
                                                         </a>
                                                         <div class="color-panel">
@@ -705,8 +512,7 @@
                                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/9.jpg"
                                                         class="img-fluid blur-up lazyload" alt="">
                                                 </a>
-                                                <div class="rating-label"><i
-                                                        class="ri-star-fill"></i><span>4.5</span>
+                                                <div class="rating-label"><i class="ri-star-fill"></i><span>4.5</span>
                                                 </div>
                                                 <div class="cart-info">
                                                     <a href="#!" title="Add to Wishlist" class="wishlist-icon">
@@ -728,8 +534,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Urban Chic
                                                         </a>
                                                         <div class="color-panel">
@@ -801,8 +606,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Glamour Gaze
                                                         </a>
                                                         <div class="color-panel">
@@ -871,8 +675,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             VogueVista
                                                         </a>
                                                         <div class="color-panel">
@@ -944,8 +747,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Urban Chic
                                                         </a>
                                                         <div class="color-panel">
@@ -996,8 +798,7 @@
                                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/13.jpg"
                                                         class="img-fluid blur-up lazyload" alt="">
                                                 </a>
-                                                <div class="rating-label"><i
-                                                        class="ri-star-fill"></i><span>4.5</span>
+                                                <div class="rating-label"><i class="ri-star-fill"></i><span>4.5</span>
                                                 </div>
                                                 <div class="cart-info">
                                                     <a href="#!" title="Add to Wishlist" class="wishlist-icon">
@@ -1019,8 +820,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Glamour Gaze
                                                         </a>
                                                         <div class="color-panel">
@@ -1092,8 +892,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Couture Edge
                                                         </a>
                                                         <div class="color-panel">
@@ -1162,8 +961,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Urban Chic
                                                         </a>
                                                         <div class="color-panel">
@@ -1233,8 +1031,7 @@
                                             <div class="product-detail">
                                                 <div>
                                                     <div class="brand-w-color">
-                                                        <a class="product-title"
-                                                            href="product-page(accordian).html">
+                                                        <a class="product-title" href="product-page(accordian).html">
                                                             Couture Edge
                                                         </a>
                                                         <div class="color-panel">
@@ -1475,7 +1272,8 @@
                 <div class="slide-7 no-arrow slick-instagram">
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/1.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/1.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1483,7 +1281,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/2.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/2.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1491,7 +1290,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/3.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/3.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1499,7 +1299,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/4.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/4.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1507,7 +1308,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/5.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/5.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1515,7 +1317,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/6.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/6.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1523,7 +1326,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/7.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/7.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1531,7 +1335,8 @@
                     </div>
                     <div>
                         <a href="#!">
-                            <div class="instagram-box"> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/4.png"
+                            <div class="instagram-box"> <img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/4.png"
                                     class="bg-img" alt="img">
                                 <div class="overlay"><i class="ri-instagram-fill"></i></div>
                             </div>
@@ -1553,42 +1358,58 @@
                 <div class="slide-6 no-arrow">
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/1.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/1.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/2.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/2.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/3.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/3.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/4.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/4.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/5.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/5.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/6.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/6.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/7.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/7.png"
+                                    alt=""></a>
                         </div>
                     </div>
                     <div>
                         <div class="logo-block">
-                            <a href="#!"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/8.png" alt=""></a>
+                            <a href="#!"><img
+                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/logos/8.png"
+                                    alt=""></a>
                         </div>
                     </div>
                 </div>

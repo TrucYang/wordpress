@@ -1,11 +1,16 @@
 <?php
 // Thêm support cơ bản
-function fs_theme_setup() {
+function fs_theme_setup()
+{
     load_theme_textdomain('fashion-store', get_template_directory() . '/languages');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('automatic-feed-links');
-    add_theme_support('custom-logo'); // cho logo
+    add_theme_support('custom-logo', array(
+        'height' => 100,
+        'width' => 100,
+    ));
+    // cho logo
     add_theme_support('html5', array('search-form', 'comment-form', 'gallery', 'caption'));
     add_theme_support('woocommerce'); // support woocommerce
     add_image_size('fs-archive-thumb', 400, 300, true);
@@ -13,13 +18,15 @@ function fs_theme_setup() {
 add_action('after_setup_theme', 'fs_theme_setup');
 
 // Đăng ký menu
-function fs_register_menus() {
+function fs_register_menus()
+{
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'fashion-store'),
-        'footer'  => __('Footer Menu', 'fashion-store'),
+        'footerLocationOne' => __('Footer Menu Location One', 'fashion-store'),
+        'footerLocationTwo' => __('Footer Menu Location Two', 'fashion-store'),
     ));
 }
-add_action('after_setup_theme','fs_register_menus');
+add_action('after_setup_theme', 'fs_register_menus');
 
 function mytheme_enqueue_assets()
 {
@@ -57,3 +64,50 @@ function mytheme_add_woocommerce_support()
     add_theme_support('woocommerce');
 }
 add_action('after_setup_theme', 'mytheme_add_woocommerce_support');
+
+class FS_Walker_Nav_Menu extends Walker_Nav_Menu
+{
+    function start_lvl(&$output, $depth = 0, $args = array())
+    {
+        $output .= "\n<ul class=\"sub-menu\">\n";
+    }
+
+    function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0)
+    {
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $class_names = join(' ', array_filter($classes));
+        $class_names = ' class="' . esc_attr($class_names) . '"';
+
+        $output .= '<li' . $class_names . '>';
+        $attributes = !empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : '';
+        $output .= '<a' . $attributes . '>';
+        $output .= esc_html($item->title);
+
+        if (in_array('new-label', $classes)) {
+            $output .= '<div class="lable-nav">new</div>';
+        }
+
+        $output .= '</a>';
+    }
+
+    function end_el(&$output, $item, $depth = 0, $args = array())
+    {
+        $output .= "</li>\n";
+    }
+}
+
+
+function my_enqueue_search_modal() {
+    wp_enqueue_script(
+        'aws-modal',
+        get_template_directory_uri() . '/assets/js/aws-modal.js', 
+        array('jquery'), 
+        false,
+        true 
+    );
+
+    wp_localize_script('aws-modal', 'aws_search', array(
+        'ajaxurl' => admin_url('admin-ajax.php')
+    ));
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_search_modal');

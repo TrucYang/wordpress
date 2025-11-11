@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="banner-section"><img src="../assets/images/about/about-us.jpg"
+                <div class="banner-section"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/about-us.jpg"
                         class="img-fluid blur-up lazyload" alt=""></div>
             </div>
             <div class="col-sm-12">
@@ -59,7 +59,7 @@
             <div>
                 <div class="media">
                     <div class="text-center">
-                        <img src="../assets/images/avtar.jpg" alt="#">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/avtar.jpg" alt="#">
                         <h5>Mark Junco</h5>
                         <h6>Designer</h6>
                     </div>
@@ -73,7 +73,7 @@
             <div>
                 <div class="media">
                     <div class="text-center">
-                        <img src="../assets/images/2.jpg" alt="#">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/2.jpg" alt="#">
                         <h5>Mark Junco</h5>
                         <h6>Designer</h6>
                     </div>
@@ -87,7 +87,7 @@
             <div>
                 <div class="media">
                     <div class="text-center">
-                        <img src="../assets/images/avtar.jpg" alt="#">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/avtar.jpg" alt="#">
                         <h5>Mark Junco</h5>
                         <h6>Designer</h6>
                     </div>
@@ -101,7 +101,7 @@
             <div>
                 <div class="media">
                     <div class="text-center">
-                        <img src="../assets/images/avtar.jpg" alt="#">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/avtar.jpg" alt="#">
                         <h5>Mark Junco</h5>
                         <h6>Designer</h6>
                     </div>
@@ -115,7 +115,7 @@
             <div>
                 <div class="media">
                     <div class="text-center">
-                        <img src="../assets/images/avtar.jpg" alt="#">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/avtar.jpg" alt="#">
                         <h5>Mark Junco</h5>
                         <h6>Designer</h6>
                     </div>
@@ -129,7 +129,7 @@
             <div>
                 <div class="media">
                     <div class="text-center">
-                        <img src="../assets/images/avtar.jpg" alt="#">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/avtar.jpg" alt="#">
                         <h5>Mark Junco</h5>
                         <h6>Designer</h6>
                     </div>
@@ -155,35 +155,35 @@
         <div class="team-4 no-arrow">
             <div>
                 <div>
-                    <img src="../assets/images/team/1.jpg" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/team/1.jpg" class="img-fluid blur-up lazyload" alt="">
                 </div>
                 <h4>Hileri Keol</h4>
                 <h6>CEo & Founder At Company</h6>
             </div>
             <div>
                 <div>
-                    <img src="../assets/images/team/2.jpg" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/team/2.jpg" class="img-fluid blur-up lazyload" alt="">
                 </div>
                 <h4>Hileri Keol</h4>
                 <h6>CEo & Founder At Company</h6>
             </div>
             <div>
                 <div>
-                    <img src="../assets/images/team/3.jpg" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/team/3.jpg" class="img-fluid blur-up lazyload" alt="">
                 </div>
                 <h4>Hileri Keol</h4>
                 <h6>CEo & Founder At Company</h6>
             </div>
             <div>
                 <div>
-                    <img src="../assets/images/team/4.jpg" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/team/4.jpg" class="img-fluid blur-up lazyload" alt="">
                 </div>
                 <h4>Hileri Keol</h4>
                 <h6>CEo & Founder At Company</h6>
             </div>
             <div>
                 <div>
-                    <img src="../assets/images/team/1.jpg" class="img-fluid blur-up lazyload" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/team/1.jpg" class="img-fluid blur-up lazyload" alt="">
                 </div>
                 <h4>Hileri Keol</h4>
                 <h6>CEo & Founder At Company</h6>
