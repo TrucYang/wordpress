@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .header-main {
+        height: 40px;
+        background-color: #162556;
+      }
+
+      .header-main .header-inner {
+        width: 1280px;
+        margin: 0 auto;
+      }
+
+      .nav > li > a {
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .nav > li > a:hover {
+        color: white;
+        font-weight: 700;
+      }
+
+      .nav > li {
+        padding: 0 5px;
+      }
+
+      .header-bottom {
+        background-color: #00538c;
+        padding: 5px 0;
+      }
+
+      .custom-search form {
+        background-color: #2f3a4f;
+        padding: 6px 10px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        width: 150px;
+        height: 35px;
+      }
+
+      .custom-search .search-icon {
+        color: #c0c6d0;
+        font-size: 16px;
+        margin-right: 8px;
+      }
+
+      .custom-search .search-field {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        width: 50%;
+      }
+
+      .custom-search .search-field::placeholder {
+        color: #c0c6d0;
+      }
+
+      #logo {
+        position: relative;
+      }
+
+      #logo img {
+        height: 54px;
+        width: 195px;
+      }
+
+      .logo a {
+        background: white;
+        height: 102px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: -135px;
+        top: -20px;
+        padding: 20px;
+        clip-path: polygon(0 0, 61% 0, 50% 100%, 0% 100%);
+        width: 461px;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .btn-tuyen-sinh {
+        border-radius: 99px;
+        background: linear-gradient(90deg, #00aaff, #2979ff);
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        padding: 4px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-tuyen-sinh:hover {
+        background: linear-gradient(90deg, #2979ff, #00aaff);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .navbar {
+        background-color: #00538c;
+        display: flex;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+
+      .navbar li {
+        margin: 0 20px;
+        position: relative;
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: 1px;
+        display: block;
+        padding: 15px 0;
+        transition: color 0.3s;
+      }
+
+      .navbar a::after {
+        content: "";
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, #00bfff, #00ffff);
+        transition: width 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .navbar a:hover::after,
+      .navbar a.active::after {
+        width: 100%;
+      }
+
+      .navbar a:hover {
+        color: #dff9ff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="header-with-logo">
+      <a href="/" id="site-logo">
+        <img
+          src="http://localhost/wordpress/wp-content/uploads/2025/10/fit-tdc-logo.png"
+          alt="fit-tdc-logo"
+        />
+      </a>
+    </div> -->
+
+    <nav class="navbar">
+      <ul>
+        <li><a href="#" class="">TIN TỨC</a></li>
+        <li><a href="#">ĐÀO TẠO</a></li>
+        <li><a href="#">GIẢNG VIÊN</a></li>
+        <li><a href="#">SINH VIÊN</a></li>
+      </ul>
+    </nav>
+  </body>
+</html>
