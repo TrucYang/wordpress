@@ -155,10 +155,20 @@
                                     <?php endif; ?>
 
                                     <button class="btn btn-solid add-to-cart-btn ajax_add_to_cart mt-3"
-                                        data-product_id="<?php echo $product->get_id(); ?>" data-quantity="1"
+                                        data-product_id="<?php echo esc_attr($product->get_id()); ?>" data-quantity="1"
                                         title="Add to cart" style="width: 100%; border-radius: 8px;">
                                         <i class="ri-shopping-cart-line"></i> Add to cart
                                     </button>
+
+
+                                    <!-- <form class="cart" action="<?php echo esc_url(home_url('/cart/')); ?>" method="post"
+                                        enctype='multipart/form-data'>
+                                        <input type="hidden" name="add-to-cart"
+                                            value="<?php echo esc_attr($product->get_id()); ?>" />
+                                        <button type="submit" class="btn btn-solid mt-3" style="width:100%; border-radius:8px;">
+                                            <i class="ri-shopping-cart-line"></i> Add to cart
+                                        </button>
+                                    </form> -->
 
 
                                     <?php

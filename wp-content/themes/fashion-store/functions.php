@@ -97,13 +97,14 @@ class FS_Walker_Nav_Menu extends Walker_Nav_Menu
 }
 
 
-function my_enqueue_search_modal() {
+function my_enqueue_search_modal()
+{
     wp_enqueue_script(
         'aws-modal',
-        get_template_directory_uri() . '/assets/js/aws-modal.js', 
-        array('jquery'), 
+        get_template_directory_uri() . '/assets/js/aws-modal.js',
+        array('jquery'),
         false,
-        true 
+        true
     );
 
     wp_localize_script('aws-modal', 'aws_search', array(
@@ -111,3 +112,21 @@ function my_enqueue_search_modal() {
     ));
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_search_modal');
+
+function theme_enqueue_woocommerce_ajax()
+{
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('wc-add-to-cart');
+    wp_localize_script('wc-add-to-cart', 'wc_add_to_cart_params', array(
+        'ajax_url' => admin_url('admin-ajax.php')
+    ));
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_woocommerce_ajax');
+
+add_action('woocommerce_thankyou', 'after_order_created');
+function after_order_created($order_id)
+{
+    $order = wc_get_order($order_id);
+
+}
+
