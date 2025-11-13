@@ -61,136 +61,137 @@
 <!-- Product slider -->
 <section class="section-b-space pt-0 ratio_asos">
     <div class="container">
-        <div class="row row-cols-2 row-cols-md-4 g-3">
+        <div class="g-3 g-md-4 row row-cols-2 row-cols-md-3 row-cols-xl-4">
             <?php
             $args = array(
                 'post_type' => 'product',
-                'posts_per_page' => 4
+                'posts_per_page' => 4,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'product_visibility',
+                        'field' => 'name',
+                        'terms' => 'featured',
+                        'operator' => 'IN',
+                    ),
+                ),
             );
+
+
             $query = new WP_Query($args);
 
             if ($query->have_posts()):
                 while ($query->have_posts()):
                     $query->the_post();
-                    global $product; ?>
-                    <div class="basic-product theme-product-1">
-                        <div class="overflow-hidden">
-                            <div class="img-wrapper position-relative">
-                                <?php if ($product && $product->is_on_sale()): ?>
-                                    <div class="ribbon"><span>Sale</span></div>
-                                <?php endif; ?>
-
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php if (has_post_thumbnail()): ?>
-                                        <?php the_post_thumbnail('medium', ['class' => 'img-fluid blur-up lazyload', 'alt' => get_the_title()]); ?>
-                                    <?php else: ?>
-                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/no-image.jpg"
-                                            class="img-fluid" alt="No image">
-                                    <?php endif; ?>
-                                </a>
-
-                                <?php
-                                // Nếu bạn có field 'rating' (ví dụ ACF)
-                                $rating = get_field('rating');
-                                if ($rating):
-                                    ?>
-                                    <div class="rating-label">
-                                        <i class="ri-star-fill"></i>
-                                        <span><?php echo esc_html($rating); ?></span>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="cart-info">
-                                    <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                    <a href="#!" data-bs-toggle="modal" data-bs-target="#quickView" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="product-detail">
-                                <div>
-                                    <div class="brand-w-color">
-                                        <a class="product-title" href="<?php the_permalink(); ?>">
-                                            <?php the_title(); ?>
-                                        </a>
-
-                                        <div class="color-panel">
-                                            <ul>
-                                                <li style="background-color: papayawhip;"></li>
-                                                <li style="background-color: burlywood;"></li>
-                                                <li style="background-color: gainsboro;"></li>
-                                            </ul>
-                                            <span>+2</span>
-                                        </div>
-                                    </div>
-
-                                    <?php if ($product): ?>
-                                        <?php
-                                        $regular_price = $product->get_regular_price();
-                                        $sale_price = $product->get_sale_price();
-                                        ?>
-                                        <h4 class="price">
-                                            <?php if ($sale_price && $sale_price < $regular_price): ?>
-                                                $<?php echo number_format($sale_price, 2); ?>
-                                                <del>$<?php echo number_format($regular_price, 2); ?></del>
-                                                <span class="discounted-price">
-                                                    <?php
-                                                    $discount = round((($regular_price - $sale_price) / $regular_price) * 100);
-                                                    echo esc_html($discount) . '% Off';
-                                                    ?>
-                                                </span>
-                                            <?php else: ?>
-                                                $<?php echo number_format($regular_price, 2); ?>
-                                            <?php endif; ?>
-                                        </h4>
+                    global $product;
+                    ?>
+                    <div>
+                        <div class="basic-product theme-product-1">
+                            <div class="overflow-hidden">
+                                <div class="img-wrapper position-relative">
+                                    <?php if ($product && $product->is_on_sale()): ?>
+                                        <div class="ribbon"><span>Sale</span></div>
                                     <?php endif; ?>
 
-                                    <button class="btn btn-solid add-to-cart-btn ajax_add_to_cart mt-3"
-                                        data-product_id="<?php echo esc_attr($product->get_id()); ?>" data-quantity="1"
-                                        title="Add to cart" style="width: 100%; border-radius: 8px;">
-                                        <i class="ri-shopping-cart-line"></i> Add to cart
-                                    </button>
-
-
-                                    <!-- <form class="cart" action="<?php echo esc_url(home_url('/cart/')); ?>" method="post"
-                                        enctype='multipart/form-data'>
-                                        <input type="hidden" name="add-to-cart"
-                                            value="<?php echo esc_attr($product->get_id()); ?>" />
-                                        <button type="submit" class="btn btn-solid mt-3" style="width:100%; border-radius:8px;">
-                                            <i class="ri-shopping-cart-line"></i> Add to cart
-                                        </button>
-                                    </form> -->
-
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php if (has_post_thumbnail()): ?>
+                                            <?php the_post_thumbnail('medium', ['class' => 'img-fluid blur-up lazyload', 'alt' => get_the_title()]); ?>
+                                        <?php else: ?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/no-image.jpg"
+                                                class="img-fluid" alt="No image">
+                                        <?php endif; ?>
+                                    </a>
 
                                     <?php
-                                    // Nếu bạn có ACF 'category' hoặc 'type'
-                                    $product_type = get_field('product_type');
-                                    if ($product_type):
+                                    // Nếu bạn có field 'rating' (ví dụ ACF)
+                                    $rating = get_field('rating');
+                                    if ($rating):
                                         ?>
-                                        <h6><?php echo esc_html($product_type); ?></h6>
-                                    <?php endif; ?>
+                                        <div class="rating-label">
+                                            <i class="ri-star-fill"></i>
+                                            <span><?php echo esc_html($rating); ?></span>
+                                        </div>
+                                    <?php endif;
+                                    ?>
+
+                                    <div class="cart-info">
+                                        <a href="#!" title="Add to Wishlist" class="wishlist-icon">
+                                            <i class="ri-heart-line"></i>
+                                        </a>
+                                        <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
+                                            <i class="ri-shopping-cart-line"></i>
+                                        </button>
+                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#quickView" title="Quick View">
+                                            <i class="ri-eye-line"></i>
+                                        </a>
+                                        <a href="compare.html" title="Compare">
+                                            <i class="ri-loop-left-line"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <ul class="offer-panel">
-                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time
-                                        Offer: 5% off</li>
-                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time
-                                        Offer: 5% off</li>
-                                    <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>Limited Time
-                                        Offer: 5% off</li>
-                                </ul>
+                                <div class="product-detail">
+                                    <div>
+                                        <div class="brand-w-color">
+                                            <a class="product-title" href="<?php the_permalink(); ?>">
+                                                <?php the_title(); ?>
+                                            </a>
+
+                                            <div class="color-panel">
+                                                <ul>
+                                                    <li style="background-color: papayawhip;"></li>
+                                                    <li style="background-color: burlywood;"></li>
+                                                    <li style="background-color: gainsboro;"></li>
+                                                </ul>
+                                                <span>+2</span>
+                                            </div>
+                                        </div>
+                                        <?php if ($product): ?>
+                                            <?php
+                                            $regular_price = $product->get_regular_price();
+                                            $sale_price = $product->get_sale_price();
+                                            ?>
+                                            <h4 class="price">
+                                                <?php if ($sale_price && $sale_price < $regular_price): ?>
+                                                    $<?php echo number_format($sale_price, 2); ?>
+                                                    <del>$<?php echo number_format($regular_price, 2); ?></del>
+                                                    <span class="discounted-price">
+                                                        <?php
+                                                        $discount = round((($regular_price - $sale_price) / $regular_price) * 100);
+                                                        echo esc_html($discount) . '% Off';
+                                                        ?>
+                                                    </span>
+                                                <?php else: ?>
+                                                    $<?php echo number_format($regular_price, 2); ?>
+                                                <?php endif; ?>
+                                            </h4>
+                                        <?php endif; ?>
+
+
+                                        <button class="btn btn-solid add-to-cart-btn ajax_add_to_cart mt-3"
+                                            data-product_id="<?php echo esc_attr($product->get_id()); ?>" data-quantity="1"
+                                            title="Add to cart" style="width: 100%; border-radius: 8px;">
+                                            <i class="ri-shopping-cart-line"></i> Add to cart
+                                        </button>
+                                        <?php
+                                        // Nếu bạn có ACF 'category' hoặc 'type'
+                                        $product_type = get_field('product_type');
+                                        if ($product_type):
+                                            ?>
+                                            <h6><?php echo esc_html($product_type); ?></h6>
+                                        <?php endif; ?>
+
+                                    </div>
+                                    <ul class="offer-panel">
+                                        <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
+                                            Limited Time Offer: 5% off</li>
+                                        <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
+                                            Limited Time Offer: 5% off</li>
+                                        <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
+                                            Limited Time Offer: 5% off</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 <?php endwhile;
             endif;
             wp_reset_postdata();
