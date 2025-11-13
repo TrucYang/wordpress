@@ -217,7 +217,7 @@
         </div>
 
         <div class="sidebar-title">
-            <a href="#!">Clear Cart</a>
+            <a href="#!" id="clear-cart">Clear Cart</a>
         </div>
 
         <div class="cart-media">
@@ -1405,77 +1405,73 @@
                     quantity: quantity
                 },
                 beforeSend: function () {
-                    button.prop('disabled', true).text('Adding...');
+                    button.prop('disabled', true).html('<i class="ri-shopping-cart-line"></i> Adding...');
                 },
                 success: function (response) {
                     if (response && response.fragments) {
-                        // Cập nhật giỏ hàng (mini cart)
+                        // Cập nhật các fragment WooCommerce mặc định
                         $.each(response.fragments, function (key, value) {
                             $(key).replaceWith(value);
                         });
-                        button.text('Added ✓').prop('disabled', false);
+
+                        // Cập nhật mini cart sidebar nếu có custom
+                        if ($('#cartOffcanvas .cart-product').length) {
+                            var newCart = $(response.fragments['div.widget_shopping_cart_content']).find('.cart-product').html();
+                            $('#cartOffcanvas .cart-product').html(newCart);
+
+                            var newSubtotal = $(response.fragments['div.widget_shopping_cart_content']).find('.cart_total .total span').html();
+                            $('#cartOffcanvas .cart_total .total span').html(newSubtotal);
+                        }
+
+                        // Cập nhật nút
+                        button.html('<i class="ri-shopping-cart-line"></i> Added ✓').prop('disabled', false);
                     } else {
-                        button.text('Error').prop('disabled', false);
+                        button.html('Error').prop('disabled', false);
                     }
                 },
                 error: function () {
-                    button.text('Error').prop('disabled', false);
+                    button.html('Error').prop('disabled', false);
                 }
             });
         });
     });
+
 </script>
 <script>
     jQuery(document).ready(function ($) {
-        $('body').on('added_to_cart', function () {
+
+        // Bắt sự kiện submit form
+        $(document).on('submit', '.aws-search-form', function (e) {
+            e.preventDefault(); // ngăn submit
+            var $form = $(this);
+            var query = $form.find('.aws-search-input').val();
+            var $resultBox = $('.search-product-box');
+
+            if (query.length < 2) {
+                $resultBox.html('');
+                return;
+            }
 
             $.ajax({
-                url: wc_cart_fragments_params.wc_ajax_url.toString().replace('%%endpoint%%', 'get_refreshed_fragments'),
-                type: 'POST',
-                success: function (data) {
-                    $('#cartOffcanvas .cart-product').load(window.location.href + ' #cartOffcanvas .cart-product > *');
-                    $('#cartOffcanvas .cart_total').load(window.location.href + ' #cartOffcanvas .cart_total > *');
+                url: aws_search.ajaxurl,
+                type: 'GET',
+                data: {
+                    action: 'aws_search',
+                    aws_query: query,
+                    aws_form_id: 1
+                },
+                success: function (res) {
+                    $resultBox.html(res);
+
+                    $resultBox.find('li').addClass('col');
+                    $resultBox.find('ul').addClass('row row-cols-xl-4 row-cols-md-3 row-cols-2 g-sm-4 g-3');
                 }
             });
-        });
-    });
 
-</script>
-<script>
-    jQuery(document).ready(function($){
-
-    // Bắt sự kiện submit form
-    $(document).on('submit', '.aws-search-form', function(e){
-        e.preventDefault(); // ngăn submit
-        var $form = $(this);
-        var query = $form.find('.aws-search-input').val();
-        var $resultBox = $('.search-product-box');
-
-        if(query.length < 2){
-            $resultBox.html('');
-            return;
-        }
-
-        $.ajax({
-            url: aws_search.ajaxurl,
-            type: 'GET',
-            data: {
-                action: 'aws_search',
-                aws_query: query,
-                aws_form_id: 1
-            },
-            success: function(res){
-                $resultBox.html(res);
-
-                $resultBox.find('li').addClass('col');
-                $resultBox.find('ul').addClass('row row-cols-xl-4 row-cols-md-3 row-cols-2 g-sm-4 g-3');
-            }
+            return false;
         });
 
-        return false;
     });
-
-});
 
 </script>
 

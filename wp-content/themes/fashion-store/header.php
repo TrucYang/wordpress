@@ -28,7 +28,7 @@
 <body class="theme-color-1">
 
     <!-- header start -->
-    <header>
+    <header id="site-header">
         <div class="top-header">
             <div class="mobile-fix-option"></div>
             <div class="container">
@@ -287,7 +287,7 @@
                                             <div data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                                                 <i class="ri-shopping-cart-line"></i>
                                             </div>
-                                            <span class="cart_qty_cls">2</span>
+                                            <span class="cart_qty_cls"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                                         </li>
                                     </ul>
                                 </div>

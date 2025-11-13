@@ -130,3 +130,94 @@ function after_order_created($order_id)
 
 }
 
+//đổi tên categoty "Chưa phân loại" mặc định thành All và slug all-products
+add_action('init', function () {
+    $term = get_term_by('slug', 'uncategorized', 'product_cat');
+    if ($term && !is_wp_error($term)) {
+        wp_update_term($term->term_id, 'product_cat', array( //wp_update_term dùng đổi tên hiển thị
+            'name' => 'All',
+            'slug' => 'all-products',
+        ));
+    }
+});
+
+add_action('pre_get_posts', function ($query) { //hook pre_get_posts dùng để xóa filter 
+    if (!is_admin() && $query->is_main_query() && is_tax('product_cat')) {
+        $term = get_queried_object();
+        if ($term && $term->slug === 'all-products') {
+            $query->set('post_type', 'product');
+            $query->set('tax_query', array()); // xóa điều kiện category
+        }
+    }
+});
+
+
+function enqueue_clear_cart_script()
+{
+    wp_enqueue_script(
+        'clear-cart-js',
+        get_template_directory_uri() . '/assets/js/clear-cart.js',
+        array('jquery'),
+        null,
+        true
+    );
+
+    // Cung cấp ajax_url cho JS
+    wp_localize_script('clear-cart-js', 'wc_add_to_cart_params', array(
+        'ajax_url' => admin_url('admin-ajax.php')
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_clear_cart_script');
+
+// --- Tắt Cart Fragments để tránh overwrite ---
+add_filter('woocommerce_cart_fragment_refresh', '__return_false');
+
+// --- Clear toàn bộ giỏ hàng ---
+add_action('wp_ajax_clear_cart', 'custom_clear_cart');
+add_action('wp_ajax_nopriv_clear_cart', 'custom_clear_cart');
+function custom_clear_cart()
+{
+    if (WC()->cart) {
+        WC()->cart->empty_cart();
+        wp_send_json_success(array(
+            'cart_subtotal' => WC()->cart->get_cart_subtotal(),
+            'cart_count' => WC()->cart->get_cart_contents_count()
+        ));
+    } else {
+        wp_send_json_error(array('message' => 'Cart not found'));
+    }
+}
+
+// ---  Xóa từng sản phẩm ---
+add_action('wp_ajax_woocommerce_remove_cart_item', 'custom_remove_cart_item');
+add_action('wp_ajax_nopriv_woocommerce_remove_cart_item', 'custom_remove_cart_item');
+function custom_remove_cart_item()
+{
+    $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
+    WC()->cart->remove_cart_item($cart_item_key);
+
+    wp_send_json(array(
+        'cart_subtotal' => WC()->cart->get_cart_subtotal(),
+        'cart_count' => WC()->cart->get_cart_contents_count()
+    ));
+}
+
+// ---  Cập nhật số lượng ---
+add_action('wp_ajax_update_cart_quantity', 'custom_update_cart_quantity');
+add_action('wp_ajax_nopriv_update_cart_quantity', 'custom_update_cart_quantity');
+function custom_update_cart_quantity()
+{
+    $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
+    $quantity = intval($_POST['quantity']);
+
+    WC()->cart->set_quantity($cart_item_key, $quantity);
+
+    $cart_item = WC()->cart->get_cart()[$cart_item_key];
+    $product_price_html = WC()->cart->get_product_price($cart_item['data']);
+
+    wp_send_json(array(
+        'cart_subtotal' => WC()->cart->get_cart_subtotal(),
+        'product_price' => $product_price_html,
+        'cart_count' => WC()->cart->get_cart_contents_count()
+    ));
+}

@@ -51,7 +51,7 @@ if (have_posts()):
                                     <?php endforeach; ?>
                                 </div>
 
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-12">
                                         <div class="slider-nav">
                                             <?php if ($main_image): ?>
@@ -64,7 +64,7 @@ if (have_posts()):
                                             <?php endforeach; ?>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- Product details -->
@@ -94,8 +94,9 @@ if (have_posts()):
 
                                     <div class="price-text">
                                         <h3><span class="fw-normal d-inline">MRP:
-                                            </span><?php echo wc_price($product->get_price()); ?></h3>
-
+                                            </span>
+                                            <?php echo '$' . number_format($product->get_price(), 2); ?>
+                                        </h3>
                                         </h3>
                                         <span>Inclusive all the taxes</span>
                                     </div>
@@ -184,11 +185,11 @@ if (have_posts()):
                             <div class="col-lg-4">
                                 <div class="product-page-details product-form-box product-right-box d-flex
                                 align-items-center flex-column my-0">
-                                    <h4 class="sub-title">Colour:</h4>
+                                <h4 class="sub-title">Quantity:</h4>
+                                    <!-- <h4 class="sub-title">Colour:</h4>
                                     <div class="variation-box size-box">
                                         <ul class="image-box image">
                                             <?php
-                                            // Lấy ảnh gallery để làm màu
                                             $color_images = array_slice($attachment_ids, 0, 3);
                                             foreach ($color_images as $index => $id):
                                                 ?>
@@ -197,7 +198,7 @@ if (have_posts()):
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
-                                    </div>
+                                    </div> -->
 
                                     <div class="product-buttons">
                                         <div class="qty-section">
