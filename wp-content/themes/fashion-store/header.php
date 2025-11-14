@@ -45,13 +45,24 @@
                         <ul class="header-dropdown">
                             <li class="mobile-wishlist"><a href="#!"><i class="ri-heart-fill"></i></a>
                             </li>
-                            <li class="onhover-dropdown mobile-account"> <i class="ri-user-fill"></i>
-                                My Account
-                                <ul class="onhover-show-div">
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="register.html">register</a></li>
-                                </ul>
+                            <li class="onhover-dropdown mobile-account">
+                                <i class="ri-user-fill"></i>
+                                <?php if (is_user_logged_in()):
+                                    $current_user = wp_get_current_user(); ?>
+                                    Hello, <?php echo esc_html($current_user->display_name); ?>
+                                    <ul class="onhover-show-div">
+                                        <li><a href="<?php echo wc_get_page_permalink('myaccount'); ?>">My Account</a></li>
+                                        <li><a href="<?php echo wp_logout_url(get_permalink()); ?>">Logout</a></li>
+                                    </ul>
+                                <?php else: ?>
+                                    My Account
+                                    <ul class="onhover-show-div">
+                                        <li><a href="<?php echo site_url('/login'); ?>">Login</a></li>
+                                        <li><a href="<?php echo site_url('/register'); ?>">Register</a></li>
+                                    </ul>
+                                <?php endif; ?>
                             </li>
+
                         </ul>
                     </div>
                 </div>
@@ -287,7 +298,8 @@
                                             <div data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                                                 <i class="ri-shopping-cart-line"></i>
                                             </div>
-                                            <span class="cart_qty_cls"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                                            <span
+                                                class="cart_qty_cls"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                                         </li>
                                     </ul>
                                 </div>

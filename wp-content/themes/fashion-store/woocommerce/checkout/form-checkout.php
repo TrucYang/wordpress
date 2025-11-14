@@ -1,4 +1,3 @@
-<?php get_header(); ?>
 <section class="section-b-space checkout-section-2">
     <div class="container">
         <div class="checkout-page">
@@ -26,12 +25,12 @@
                                                             <label class="form-check-label" for="check">
                                                                 <span class="name">New Home</span>
                                                                 <span class="address text-content"><span
+                                                                        class="text-title">Name :</span>
+                                                                    Harry Potter</span>
+                                                                <span class="address text-content"><span
                                                                         class="text-title">Address :</span> 26,
                                                                     Starts Hollow Colony, Denver, Colorado, United
                                                                     States</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Pin Code :</span>
-                                                                    80014</span>
                                                                 <span class="address text-content"><span
                                                                         class="text-title">Phone :</span> +1
                                                                     5551855359</span>
@@ -58,106 +57,10 @@
                                                             </label>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-xxl-6 col-lg-12 col-md-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="flexRadioDefault" id="check2">
-                                                            <label class="form-check-label" for="check2">
-                                                                <span class="name">Office</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Address :</span> 21B, Row
-                                                                    New Street, San Jose, California, United
-                                                                    States</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Pin Code :</span>
-                                                                    32659</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Phone :</span> +1
-                                                                    5551855359</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
-
-                                    <li>
-                                        <div class="checkout-box">
-                                            <div class="checkout-title">
-                                                <h4>Billing Address</h4>
-                                                <button data-bs-toggle="modal" data-bs-target="#addAddress"
-                                                    class="d-flex align-items-center btn"><i
-                                                        class="ri-add-line me-1"></i> Add New</button>
-                                            </div>
-
-                                            <div class="checkout-detail">
-                                                <div class="row g-3">
-                                                    <div class="col-xxl-6 col-lg-12 col-md-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio" name="checkbox"
-                                                                id="check3">
-                                                            <label class="form-check-label" for="check3">
-                                                                <span class="name">New Home</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Address :</span> 26,
-                                                                    Starts Hollow Colony, Denver, Colorado, United
-                                                                    States</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Pin Code :</span>
-                                                                    80014</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Phone :</span> +1
-                                                                    5551855359</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-xxl-6 col-lg-12 col-md-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio" name="checkbox"
-                                                                id="check4" checked>
-                                                            <label class="form-check-label" for="check4">
-                                                                <span class="name">Old Home</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Address :</span> 53B,
-                                                                    Claire New Street, San Jose, Colorado, United
-                                                                    States</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Pin Code :</span>
-                                                                    36954</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Phone :</span> +1
-                                                                    5551855359</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-xxl-6 col-lg-12 col-md-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio" name="checkbox"
-                                                                id="check5">
-                                                            <label class="form-check-label" for="check5">
-                                                                <span class="name">Office</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Address :</span> 21B, Row
-                                                                    New Street, San Jose, California, United
-                                                                    States</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Pin Code :</span>
-                                                                    32659</span>
-                                                                <span class="address text-content"><span
-                                                                        class="text-title">Phone :</span> +1
-                                                                    5551855359</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
                                     <li>
                                         <div class="checkout-box">
                                             <div class="checkout-title">
@@ -193,7 +96,6 @@
                                             <div class="checkout-title">
                                                 <h4>Payment Options</h4>
                                             </div>
-
                                             <div class="checkout-detail">
                                                 <div class="row g-3">
                                                     <div class="col-sm-6">
@@ -204,98 +106,12 @@
                                                                 DELIVERY</label>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check10" checked>
-                                                            <label class="form-check-label" for="check10">PAYPAL</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check11" checked>
-                                                            <label class="form-check-label" for="check11">STRIPE</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check12" checked>
-                                                            <label class="form-check-label"
-                                                                for="check12">SSLCOMMERZ</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check13" checked>
-                                                            <label class="form-check-label"
-                                                                for="check13">FLUTTERWAVE</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check14" checked>
-                                                            <label class="form-check-label"
-                                                                for="check14">PAYSTACK</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check15" checked>
-                                                            <label class="form-check-label" for="check15">MOLLIE</label>
-                                                        </div>
-                                                    </div>
-
                                                     <div class="col-sm-6">
                                                         <div class="delivery-address-box">
                                                             <input class="form-check-input" type="radio"
                                                                 name="checkbox3" id="check16" checked>
                                                             <label class="form-check-label" for="check16">BANK
                                                                 TRANSFER</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check17" checked>
-                                                            <label class="form-check-label" for="check17">BKASH</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check18" checked>
-                                                            <label class="form-check-label"
-                                                                for="check18">CCAVENUE</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="check19" checked>
-                                                            <label class="form-check-label"
-                                                                for="check19">PHONEPE</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="delivery-address-box">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="checkbox3" id="20" checked>
-                                                            <label class="form-check-label" for="20">INSTAMOJO</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -317,33 +133,28 @@
                                     </div>
 
                                     <ul class="qty">
-                                        <li>
-                                            <div class="cart-image">
-                                                <img src="../assets/images/product-details/product/17.jpg"
-                                                    class="img-fluid" alt="">
-                                            </div>
-                                            <div class="cart-content">
-                                                <div>
-                                                    <h4>Gym Coords Set (Brown)</h4>
-                                                    <h5>$15.00 X 1</h5>
+                                        <?php
+                                        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                                            $product = $cart_item['data'];
+                                            $quantity = $cart_item['quantity'];
+                                            $price = $product->get_price();
+                                            $subtotal = WC()->cart->get_product_subtotal($product, $quantity);
+                                            $image = wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), 'medium')[0];
+                                            ?>
+                                            <li>
+                                                <div class="cart-image">
+                                                    <img src="<?php echo esc_url($image); ?>" class="img-fluid"
+                                                        alt="<?php echo esc_attr($product->get_name()); ?>">
                                                 </div>
-                                                <span class="text-theme">$15.00</span>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="cart-image">
-                                                <img src="../assets/images/fashion-1/product/17.jpg" class="img-fluid"
-                                                    alt="">
-                                            </div>
-                                            <div class="cart-content">
-                                                <div>
-                                                    <h4>Tan Cargo Shorts</h4>
-                                                    <h5>$12.00 X 1</h5>
+                                                <div class="cart-content">
+                                                    <div>
+                                                        <h4><?php echo esc_html($product->get_name()); ?></h4>
+                                                        <h5><?php echo wc_price($price); ?> X <?php echo $quantity; ?></h5>
+                                                    </div>
+                                                    <span class="text-theme"><?php echo $subtotal; ?></span>
                                                 </div>
-                                                <span class="text-theme">$12.00</span>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </div>
@@ -401,31 +212,19 @@
                                     </div>
                                     <div class="custom-box-loader">
                                         <ul class="sub-total">
-                                            <li>Sub Total <span class="count">$29.25</span></li>
-                                            <li> Shipping <span class="count">$0.00</span></li>
-                                            <li> Tax <span class="count">$1.46</span></li>
-                                            <li>
-                                                <h4 class="txt-muted">Points</h4>
-                                                <h4 class="price txt-muted">$65.66</h4>
+                                            <li>Sub Total <span
+                                                    class="count"><?php echo WC()->cart->get_cart_subtotal(); ?></span>
                                             </li>
-                                            <li class="border-cls">
-                                                <label for="ponts" class="form-check-label m-0">Would you prefer
-                                                    to pay using points?</label>
-                                                <input type="checkbox" id="ponts" class="checkbox_animated check-it">
+                                            <li>Shipping <span
+                                                    class="count"><?php echo WC()->cart->get_cart_shipping_total(); ?></span>
                                             </li>
-                                            <li>
-                                                <h4>Wallet Balance</h4>
-                                                <h4 class="price">$8.47</h4>
-                                            </li>
-                                            <li class="border-cls">
-                                                <label for="wallet" class="form-check-label m-0">Would you
-                                                    prefer to pay using wallet?</label>
-                                                <input type="checkbox" id="wallet" class="checkbox_animated check-it">
+                                            <li>Tax <span
+                                                    class="count"><?php echo WC()->cart->get_taxes_total() ? wc_price(WC()->cart->get_taxes_total()) : '$0.00'; ?></span>
                                             </li>
                                         </ul>
                                     </div>
                                     <ul class="total">
-                                        <li>Total <span class="count">$30.71</span></li>
+                                        <li>Total <span class="count"><?php echo WC()->cart->get_total(); ?></span></li>
                                     </ul>
                                     <div class="text-end">
                                         <button class="btn order-btn">Place Order</button>
@@ -439,4 +238,3 @@
         </div>
     </div>
 </section>
-<?php get_footer(); ?>
