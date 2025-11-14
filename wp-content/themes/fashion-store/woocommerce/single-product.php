@@ -1,13 +1,12 @@
-<?php get_header(); ?>
 <!-- breadcrumb start -->
 <?php
 defined('ABSPATH') || exit;
-get_header('shop');
+get_header();
 
 if (have_posts()):
     while (have_posts()):
         the_post();
-
+        // wc_get_template_part( 'content', 'single-product' );
 
         $product = wc_get_product(get_the_ID());
         if (!$product)
@@ -648,6 +647,10 @@ endif;
 <!-- product-tab ends -->
 
 <!-- related products -->
+<?php
+$related_ids = wc_get_related_products($product->get_id(), 6);
+if (!empty($related_ids)):
+?>
 <section class="section-b-space ratio_asos">
     <div class="container">
         <div class="row">
@@ -656,352 +659,82 @@ endif;
             </div>
         </div>
 
-        <div class="product-5 product-m no-arrow">
-            <div class="basic-product theme-product-1">
-                <div class="overflow-hidden">
-                    <div class="img-wrapper">
-                        <a href="product-page(accordian).html">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/5.jpg"
-                                class="img-fluid blur-up lazyload" alt="">
-                        </a>
-                        <div class="rating-label"><i class="ri-star-fill"></i><span>4.5</span>
-                        </div>
-                        <div class="cart-info">
-                            <ul class="hover-action">
-                                <li>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#!" title="Add to Wishlist">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div>
-                            <div class="brand-w-color">
-                                <a class="product-title" href="product-page(accordian).html">
-                                    Glamour Gaze
-                                </a>
+        <div class="g-3 g-md-4 row row-cols-2 row-cols-md-3 row-cols-xl-4">
+            <?php
+            foreach ($related_ids as $related_id):
+                $related_prod = wc_get_product($related_id);
+                if (!$related_prod) continue;
+                
+                $related_price = $related_prod->get_price();
+                $related_sale_price = $related_prod->get_sale_price();
+                $related_regular_price = $related_prod->get_regular_price();
+                $related_image = wp_get_attachment_url($related_prod->get_image_id());
+                $related_rating = $related_prod->get_average_rating();
+            ?>
+            <div>
+                <div class="basic-product theme-product-1">
+                    <div class="overflow-hidden">
+                        <div class="img-wrapper position-relative">
+                            <?php if ($related_prod->is_on_sale()): ?>
+                                <div class="ribbon"><span>Sale</span></div>
+                            <?php endif; ?>
 
+                            <a href="<?php echo esc_url($related_prod->get_permalink()); ?>">
+                                <?php if ($related_image): ?>
+                                    <img src="<?php echo esc_url($related_image); ?>" class="img-fluid blur-up lazyload" alt="<?php echo esc_attr($related_prod->get_name()); ?>">
+                                <?php else: ?>
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/no-image.jpg" class="img-fluid" alt="No image">
+                                <?php endif; ?>
+                            </a>
+
+                            <div class="rating-label">
+                                <i class="ri-star-fill"></i>
+                                <span><?php echo number_format($related_rating, 1); ?></span>
                             </div>
-                            <h6>Purple Mini Dress</h6>
-                            <h4 class="price">$ 4.34<del> $5.00 </del><span class="discounted-price">
-                                    5% Off
-                                </span>
-                            </h4>
+
+                            <div class="cart-info">
+                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
+                                    <i class="ri-heart-line"></i>
+                                </a>
+                                <a href="<?php echo esc_url($related_prod->add_to_cart_url()); ?>" title="Add to cart" class="add-to-cart-btn" data-product_id="<?php echo esc_attr($related_prod->get_id()); ?>">
+                                    <i class="ri-shopping-cart-line"></i>
+                                </a>
+                                <a href="<?php echo esc_url($related_prod->get_permalink()); ?>" title="Quick View">
+                                    <i class="ri-eye-line"></i>
+                                </a>
+                            </div>
                         </div>
-                        <ul class="offer-panel">
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                        </ul>
+                        <div class="product-detail">
+                            <div>
+                                <div class="brand-w-color">
+                                    <a class="product-title" href="<?php echo esc_url($related_prod->get_permalink()); ?>">
+                                        <?php echo esc_html($related_prod->get_name()); ?>
+                                    </a>
+                                </div>
+                                <h4 class="price">
+                                    <?php if ($related_sale_price && $related_sale_price < $related_regular_price): ?>
+                                        $<?php echo number_format($related_sale_price, 2); ?>
+                                        <del>$<?php echo number_format($related_regular_price, 2); ?></del>
+                                        <span class="discounted-price">
+                                            <?php
+                                            $discount = round((($related_regular_price - $related_sale_price) / $related_regular_price) * 100);
+                                            echo esc_html($discount) . '% Off';
+                                            ?>
+                                        </span>
+                                    <?php else: ?>
+                                        $<?php echo number_format($related_price, 2); ?>
+                                    <?php endif; ?>
+                                </h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="basic-product theme-product-1">
-                <div class="overflow-hidden">
-                    <div class="img-wrapper">
-                        <a href="product-page(accordian).html"><img
-                                src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/6.jpg"
-                                class="img-fluid blur-up lazyload" alt=""></a>
-                        <div class="rating-label"><i class="fa fa-star"></i>
-                            <span>4.5</span>
-                        </div>
-                        <div class="cart-info">
-                            <ul class="hover-action">
-                                <li>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#!" title="Add to Wishlist">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div>
-                            <div class="brand-w-color">
-                                <a class="product-title" href="product-page(accordian).html">
-                                    Couture Edge
-                                </a>
-
-                            </div>
-                            <h6>Chic Mini Dress</h6>
-                            <h4 class="price">$ 3.40 </h4>
-                        </div>
-                        <ul class="offer-panel">
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="basic-product theme-product-1">
-                <div class="overflow-hidden">
-                    <div class="img-wrapper">
-                        <a href="product-page(accordian).html"><img
-                                src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/7.jpg"
-                                class="img-fluid blur-up lazyload" alt=""></a>
-                        <div class="rating-label"><i class="fa fa-star"></i>
-                            <span>4.5</span>
-                        </div>
-                        <div class="cart-info">
-                            <ul class="hover-action">
-                                <li>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#!" title="Add to Wishlist">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div>
-                            <div class="brand-w-color">
-                                <a class="product-title" href="product-page(accordian).html">
-                                    Urban Chic
-                                </a>
-
-                            </div>
-                            <h6> Stripped Bodycon Dress</h6>
-                            <h4 class="price">$ 2.10</h4>
-                        </div>
-                        <ul class="offer-panel">
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="basic-product theme-product-1">
-                <div class="overflow-hidden">
-                    <div class="img-wrapper">
-                        <a href="product-page(accordian).html"><img
-                                src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/8.jpg"
-                                class="img-fluid blur-up lazyload" alt=""></a>
-                        <div class="rating-label"><i class="fa fa-star"></i>
-                            <span>4.5</span>
-                        </div>
-                        <div class="cart-info">
-                            <ul class="hover-action">
-                                <li>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#!" title="Add to Wishlist">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div>
-                            <div class="brand-w-color">
-                                <a class="product-title" href="product-page(accordian).html">
-                                    Couture Edge
-                                </a>
-
-                            </div>
-                            <h6>Tie and Dye Chiffon Top</h6>
-                            <h4 class="price">$ 2.79<del> $3.00 </del><span class="discounted-price">
-                                    7% Off
-                                </span>
-                            </h4>
-                        </div>
-                        <ul class="offer-panel">
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="basic-product theme-product-1">
-                <div class="overflow-hidden">
-                    <div class="img-wrapper">
-                        <a href="product-page(accordian).html"><img
-                                src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/11.jpg"
-                                class="img-fluid blur-up lazyload" alt=""></a>
-                        <div class="rating-label"><i class="fa fa-star"></i>
-                            <span>4.5</span>
-                        </div>
-                        <div class="cart-info">
-                            <ul class="hover-action">
-                                <li>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#!" title="Add to Wishlist">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div>
-                            <div class="brand-w-color">
-                                <a class="product-title" href="product-page(accordian).html">
-                                    Glamour Gaze
-                                </a>
-                            </div>
-                            <h6>Chic Crop Top</h6>
-                            <h4 class="price">$ 5.60 </h4>
-                        </div>
-                        <ul class="offer-panel">
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="basic-product theme-product-1">
-                <div class="overflow-hidden">
-                    <div class="img-wrapper">
-                        <a href="product-page(accordian).html"><img
-                                src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/12.jpg"
-                                class="img-fluid blur-up lazyload" alt=""></a>
-                        <div class="rating-label"><i class="fa fa-star"></i>
-                            <span>4.5</span>
-                        </div>
-                        <div class="cart-info">
-                            <ul class="hover-action">
-                                <li>
-                                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                        <i class="ri-shopping-cart-line"></i>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#!" title="Add to Wishlist">
-                                        <i class="ri-heart-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                        <i class="ri-eye-line"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ri-loop-left-line"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        <div>
-                            <div class="brand-w-color">
-                                <a class="product-title" href="product-page(accordian).html">
-                                    Urban Chic
-                                </a>
-
-                            </div>
-                            <h6>Backless Crop Top</h6>
-                            <h4 class="price">$ 3.27 </h4>
-                        </div>
-                        <ul class="offer-panel">
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                            <li><span class="offer-icon"><i class="ri-discount-percent-fill"></i></span>
-                                Limited Time Offer: 5% off</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
+    </div>
 </section>
+<?php endif; ?>
 <!-- related products -->
 
 <script>
