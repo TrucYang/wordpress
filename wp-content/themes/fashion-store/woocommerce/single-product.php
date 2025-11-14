@@ -79,17 +79,29 @@ if (have_posts()):
                                     <h2 class="main-title"><?php the_title(); ?></h2>
 
                                     <div class="product-rating">
-                                        <div class="rating-list">
-                                            <?php
-                                            $average = $product->get_average_rating();
-                                            for ($i = 1; $i <= 5; $i++) {
-                                                echo $i <= $average ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
-                                            }
-                                            ?>
-                                        </div>
-                                        <span class="divider">|</span>
-                                        <a href="#!"><?php echo $product->get_review_count(); ?> Reviews</a>
-                                    </div>
+    <div class="rating-list">
+        <?php
+        $average = $product->get_average_rating();
+        for ($i = 1; $i <= 5; $i++) {
+            echo $i <= $average ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
+        }
+        ?>
+    </div>
+    <span class="divider">|</span>
+    <a href="#!"><?php echo $product->get_review_count(); ?> Reviews</a>
+    <span class="divider">|</span>
+    <span>
+        <?php
+        $views = get_post_meta(get_the_ID(), '_product_views', true);
+        echo $views ? $views : 0;
+        ?> Views
+    </span>
+</div>
+
+
+
+
+
 
                                     <div class="price-text">
                                         <h3><span class="fw-normal d-inline">MRP:
@@ -648,8 +660,14 @@ endif;
 
 <!-- related products -->
 <?php
-$related_ids = wc_get_related_products($product->get_id(), 6);
-if (!empty($related_ids)):
+global $product;
+
+if ( ! $product ) return;
+
+// Lấy sản phẩm liên quan theo category
+$related_products = wc_get_related_products( $product->get_id(), 5 ); // lấy 5 sản phẩm
+
+if ( $related_products ) :
 ?>
 <section class="section-b-space ratio_asos">
     <div class="container">
@@ -659,73 +677,62 @@ if (!empty($related_ids)):
             </div>
         </div>
 
-        <div class="g-3 g-md-4 row row-cols-2 row-cols-md-3 row-cols-xl-4">
-            <?php
-            foreach ($related_ids as $related_id):
-                $related_prod = wc_get_product($related_id);
-                if (!$related_prod) continue;
-                
-                $related_price = $related_prod->get_price();
-                $related_sale_price = $related_prod->get_sale_price();
-                $related_regular_price = $related_prod->get_regular_price();
-                $related_image = wp_get_attachment_url($related_prod->get_image_id());
-                $related_rating = $related_prod->get_average_rating();
+        <div class="product-5 product-m no-arrow">
+            <?php foreach ( $related_products as $related_id ) :
+                $related_product = wc_get_product( $related_id );
+                $permalink = get_permalink( $related_id );
+                $image = wp_get_attachment_image_src( get_post_thumbnail_id( $related_id ), 'full' );
+                $price_html = $related_product->get_price_html();
+                $title = $related_product->get_name();
             ?>
-            <div>
-                <div class="basic-product theme-product-1">
-                    <div class="overflow-hidden">
-                        <div class="img-wrapper position-relative">
-                            <?php if ($related_prod->is_on_sale()): ?>
-                                <div class="ribbon"><span>Sale</span></div>
-                            <?php endif; ?>
-
-                            <a href="<?php echo esc_url($related_prod->get_permalink()); ?>">
-                                <?php if ($related_image): ?>
-                                    <img src="<?php echo esc_url($related_image); ?>" class="img-fluid blur-up lazyload" alt="<?php echo esc_attr($related_prod->get_name()); ?>">
-                                <?php else: ?>
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/no-image.jpg" class="img-fluid" alt="No image">
-                                <?php endif; ?>
-                            </a>
-
-                            <div class="rating-label">
-                                <i class="ri-star-fill"></i>
-                                <span><?php echo number_format($related_rating, 1); ?></span>
-                            </div>
-
-                            <div class="cart-info">
-                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                    <i class="ri-heart-line"></i>
-                                </a>
-                                <a href="<?php echo esc_url($related_prod->add_to_cart_url()); ?>" title="Add to cart" class="add-to-cart-btn" data-product_id="<?php echo esc_attr($related_prod->get_id()); ?>">
-                                    <i class="ri-shopping-cart-line"></i>
-                                </a>
-                                <a href="<?php echo esc_url($related_prod->get_permalink()); ?>" title="Quick View">
-                                    <i class="ri-eye-line"></i>
-                                </a>
-                            </div>
+            <div class="basic-product theme-product-1">
+                <div class="overflow-hidden">
+                    <div class="img-wrapper">
+                        <a href="<?php echo esc_url($permalink); ?>">
+                            <img src="<?php echo esc_url($image[0]); ?>" class="img-fluid blur-up lazyload" alt="<?php echo esc_attr($title); ?>">
+                        </a>
+                        <?php if ( $related_product->get_average_rating() > 0 ) : ?>
+                        <div class="rating-label">
+                            <i class="ri-star-fill"></i>
+                            <span><?php echo esc_html($related_product->get_average_rating()); ?></span>
                         </div>
-                        <div class="product-detail">
-                            <div>
-                                <div class="brand-w-color">
-                                    <a class="product-title" href="<?php echo esc_url($related_prod->get_permalink()); ?>">
-                                        <?php echo esc_html($related_prod->get_name()); ?>
+                        <?php endif; ?>
+
+                        <div class="cart-info">
+                            <ul class="hover-action">
+                                <li>
+                                    <button class="add_to_cart_button" data-product_id="<?php echo esc_attr($related_id); ?>" title="Add to cart">
+                                        <i class="ri-shopping-cart-line"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <a href="<?php echo esc_url( get_permalink( $related_id ) ); ?>?add_to_wishlist=1" title="Add to Wishlist">
+                                        <i class="ri-heart-line"></i>
                                     </a>
-                                </div>
-                                <h4 class="price">
-                                    <?php if ($related_sale_price && $related_sale_price < $related_regular_price): ?>
-                                        $<?php echo number_format($related_sale_price, 2); ?>
-                                        <del>$<?php echo number_format($related_regular_price, 2); ?></del>
-                                        <span class="discounted-price">
-                                            <?php
-                                            $discount = round((($related_regular_price - $related_sale_price) / $related_regular_price) * 100);
-                                            echo esc_html($discount) . '% Off';
-                                            ?>
-                                        </span>
-                                    <?php else: ?>
-                                        $<?php echo number_format($related_price, 2); ?>
-                                    <?php endif; ?>
-                                </h4>
+                                </li>
+                                <li>
+                                    <a href="<?php echo esc_url($permalink); ?>" title="Quick View">
+                                        <i class="ri-eye-line"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo esc_url($permalink); ?>?add_to_compare=1" title="Compare">
+                                        <i class="ri-loop-left-line"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="product-detail">
+                        <div>
+                            <div class="brand-w-color">
+                                <a class="product-title" href="<?php echo esc_url($permalink); ?>">
+                                    <?php echo esc_html($title); ?>
+                                </a>
                             </div>
+                            <h6><?php echo esc_html($related_product->get_short_description()); ?></h6>
+                            <h4 class="price"><?php echo $price_html; ?></h4>
                         </div>
                     </div>
                 </div>
@@ -735,6 +742,7 @@ if (!empty($related_ids)):
     </div>
 </section>
 <?php endif; ?>
+
 <!-- related products -->
 
 <script>

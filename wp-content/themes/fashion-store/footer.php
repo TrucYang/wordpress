@@ -70,21 +70,17 @@
                             <h4>Help Center</h4>
                         </div>
                         <div class="footer-content">
-                            <ul>
-                                <li><a class="text-content" href="dashboard.html">My
-                                        Account</a></li>
-                                <li><a class="text-content" href="dashboard.html">My
-                                        Orders</a>
-                                </li>
-                                <li><a class="text-content" href="order-tracking.html">Track
-                                        Order</a></li>
-                                <li><a class="text-content" href="wishlist.html">Wishlist</a>
-                                </li>
-                                <li><a class="text-content" href="faq.html">Faq's</a></li>
-                                <li><a class="text-content" href="contact.html">Contact
-                                        Us</a>
-                                </li>
-                            </ul>
+                            <?php
+                            wp_nav_menu(array(
+                                'theme_location' => 'footerLocationTwo',
+                                'container' => false,
+                                'menu_class' => '',
+                                'fallback_cb' => false,
+                                'items_wrap' => '<ul>%3$s</ul>',
+                                'link_before' => '<span class="text-content">',
+                                'link_after' => '</span>',
+                            ));
+                            ?>
                         </div>
                     </div>
                 </div>

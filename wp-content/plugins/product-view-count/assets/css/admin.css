@@ -1,0 +1,107 @@
+/*help tab*/
+#product-view-count-helps{
+	border: 1px solid #f0f0f0;
+}
+#product-view-count-helps .product-view-count-help{
+	border-bottom: 1px solid #f0f0f0;
+	padding: 4px 8px;
+}
+#product-view-count-helps .product-view-count-help-heading {
+	margin: 5px 0;
+	font-size: 14px;
+	cursor: pointer;
+}
+#product-view-count-helps .product-view-count-help-heading a, 
+#product-view-count-helps .product-view-count-help-text a{
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-color: #4256b2;
+	font-size: 15px;
+	text-decoration: none;
+	font-weight: 300;
+}
+#product-view-count-helps .product-view-count-help-heading .heading-text {
+	color: #515151;
+	font-size: 18px;
+	text-decoration: none;
+	font-weight: 300;
+}
+#product-view-count-helps .product-view-count-help-text > p {
+	font-size: 15px;
+}
+#product-view-count-helps .product-view-count-help-text > p:first-child {
+	margin: 0;
+}
+#product-view-count-helps .product-view-count-help-text {
+	padding: 8px;
+}
+#cx-row-product-view-count_tools-report .cx-field-wrap {
+	position: relative;
+}
+#product-view-count_report-copy {
+    position: absolute;
+    padding: 3px;
+    line-height: 0px;
+    right: 10px;
+    bottom: 20px;
+}
+/*=======new design=======*/
+#product-view-count_help .product-view-count-help-tab {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+#product-view-count_help .product-view-count-help-link {
+	display: block;
+	text-decoration: none;
+	background: #fff;
+	text-align: center;
+	width: 200px;
+	margin: 10px 0;
+	padding: 17px;
+	border-radius: 5px;
+	font-size: 17px;
+	color: #4256b2;
+	border: 1px solid #4256b2;
+	margin-bottom: 20px;
+	transition: .4s;
+}
+#product-view-count_help .product-view-count-help-link:hover {
+	background: #4256b2;
+	color: #fff;
+}
+#product-view-count-modal {
+    position: fixed;
+    background: #c8c8c859;
+    top: 0;
+    border: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#product-view-count-modal-loader {
+    position: absolute;
+}
+table.wp-list-table th#view {
+    width: 100px;
+}
+
+@media only screen and (max-width : 810px) {
+	#product-view-count_help .product-view-count-help-tab {
+		grid-template-columns: 4fr 1fr;
+	}
+	#product-view-count_help .product-view-count-help-link{
+		width: 150px;
+	}
+}
+@media only screen and (max-width : 420px) {
+	#product-view-count_help .product-view-count-help-tab {
+		grid-template-columns: 1fr;
+	}
+	#product-view-count_help .product-view-count-help-link{
+		width: 200px;
+	}
+}
