@@ -156,25 +156,46 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
                                                     placeholder="Enter Coupon Code Here...">
                                                 <button class="apply-button btn">Apply now</button>
                                             </div>
+                                            <div class="coupon-message"></div>
                                         </div>
                                     </div>
-                                        <div class="custom-box-loader">
+
+                                    <div class="custom-box-loader">
                                         <ul class="sub-total">
                                             <li>Sub Total <span class="count"><?php echo WC()->cart->get_cart_subtotal(); ?></span></li>
-                                            <li>Shipping <span class="count"><?php echo WC()->cart->get_cart_shipping_total(); ?></span></li>
-                                            <li>Tax <span class="count"><?php echo WC()->cart->get_taxes_total() ? wc_price(WC()->cart->get_taxes_total()) : '$0.00'; ?></span></li>
+
+                                            <?php 
+                                                $packages = WC()->shipping()->get_packages();
+                                                $package  = current($packages);
+                                                $rates    = $package['rates'];
+
+                                                $chosen   = WC()->session->get( 'chosen_shipping_methods' )[0] ?? '';
+                                            ?>
+
+                                            <li class="shipping-totals">
+                                                <?php if ( ! empty($rates) ) : ?>
+                                                    <?php foreach ($rates as $rate_id => $rate) : ?>
+                                                        <?php if ( $rate_id === $chosen ) : ?>
+                                                            Shipping 
+                                                            <span class="count"><?php echo wc_price($rate->get_cost()); ?></span>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+                                            </li>
+
+                                            <li>Tax <span class="count"><?php echo WC()->cart->get_taxes_total() ? wc_price(WC()->cart->get_taxes_total()) : '0.00$'; ?></span></li>
                                         </ul>
-                                        </div>
+                                    </div>
                                         <ul class="total">
                                             <li>Total <span class="count"><?php echo WC()->cart->get_total(); ?></span></li>
                                         </ul>
 
-                                        <div class="text-end mt-3">
+                                    <div class="text-end mt-3">
                                             <?php echo apply_filters('woocommerce_order_button_html', '<button type="submit" class="btn order-btn" name="woocommerce_checkout_place_order" id="place_order" value="Place order">Place Order</button>'); ?>
-                                        </div>
                                     </div>
-                                </div>
                             </div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
