@@ -225,3 +225,14 @@ function custom_update_cart_quantity()
 add_filter('woocommerce_logout_redirect', function($redirect) {
     return home_url(); 
 });
+
+//checkout
+function enqueue_wc_custom_checkout_js()
+{
+    if (is_checkout()) {
+        wp_enqueue_script('wc-checkout');
+        wp_enqueue_script('wc-country-select');
+        wp_enqueue_script('wc-address-i18n');
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_wc_custom_checkout_js');

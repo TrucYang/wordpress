@@ -1,6 +1,12 @@
-<?php get_header(); ?>
+<?php
+get_header();
 
-<!-- breadcrumb start -->
+if (is_user_logged_in()) {
+    wp_redirect(home_url());
+    exit;
+}
+?>
+
 <div class="breadcrumb-section">
     <div class="container">
         <h2>Customer's login</h2>
@@ -12,10 +18,7 @@
         </nav>
     </div>
 </div>
-<!-- breadcrumb End -->
 
-
-<!--section start-->
 <section class="login-page section-b-space">
     <div class="container">
         <div class="row">
@@ -23,22 +26,16 @@
                 <h3>Login</h3>
                 <div class="theme-card">
                     <?php
-                    wc_get_template('myaccount/form-login.php');
+                    woocommerce_login_form(
+                        array(
+                            'redirect' => home_url(), //redirect về Home
+                        )
+                    );
                     ?>
-                    <!-- <form class="theme-form">
-                            <div class="form-box">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" placeholder="Email" required="">
-                            </div>
-                            <div class="form-box">
-                                <label for="review" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="review"
-                                    placeholder="Enter your password" required="">
-                            </div>
-                            <a href="index.html" class="btn btn-solid">Login</a>
-                        </form> -->
+
                 </div>
             </div>
+
             <div class="col-lg-6 right-login">
                 <h3>New Customer</h3>
                 <div class="theme-card authentication-right">
@@ -51,6 +48,5 @@
         </div>
     </div>
 </section>
-<!--Section ends-->
 
 <?php get_footer(); ?>
