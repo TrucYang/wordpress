@@ -236,3 +236,41 @@ function enqueue_wc_custom_checkout_js()
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_wc_custom_checkout_js');
+
+
+//Coupon
+add_action('wp_ajax_apply_custom_coupon', 'apply_custom_coupon');
+add_action('wp_ajax_nopriv_apply_custom_coupon', 'apply_custom_coupon');
+
+
+function apply_custom_coupon(){
+    if(!isset($_POST['coupon_code'])) wp_send_json_error(['message' => 'No coupon code provided']);
+    
+    $coupon_code = sanitize_text_field($_POST['coupon_code']);
+    if( WC()->cart->has_discount($coupon_code) ){
+        wp_send_json_error(['message' => 'Coupon already applied']);
+    }
+
+    $applied = WC()->cart->apply_coupon($coupon_code);
+
+    if($applied){
+        WC()->cart->calculate_totals();
+        wp_send_json_success(['message' => 'Coupon applied successfully!']);
+    } else {
+        wp_send_json_error(['message' => 'Invalid coupon']);
+    }
+}
+
+function enqueue_custom_checkout_js() {
+    if( is_checkout() ) {
+        wp_enqueue_script(
+            'custom-checkout-js',
+            get_template_directory_uri() . '/assets/js/coupon.js',
+            array('jquery'),
+            null,
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_checkout_js');
+
