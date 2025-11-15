@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* WordPress Admin specific styles */
+.pvc-admin-dashboard {
+  @apply bg-white;
+}
+
+.pvc-card {
+  @apply bg-white border border-wp-gray-dark rounded-lg shadow-sm p-6;
+}
+
+.pvc-button-primary {
+  @apply bg-wp-blue hover:bg-wp-blue-dark text-white px-4 py-2 rounded transition-colors duration-200;
+}
+
+.pvc-button-secondary {
+  @apply bg-wp-gray hover:bg-wp-gray-dark text-gray-700 px-4 py-2 rounded border transition-colors duration-200;
+}
+
+.pvc-input {
+  @apply border border-wp-gray-dark rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-wp-blue focus:border-transparent;
+}
+
+.pvc-table {
+  @apply w-full border-collapse;
+}
+
+.pvc-table th {
+  @apply bg-wp-gray text-left px-4 py-3 font-medium text-gray-700 border-b border-wp-gray-dark;
+}
+
+.pvc-table td {
+  @apply px-4 py-3 border-b border-wp-gray-dark;
+}
+
+.pvc-table tr:hover {
+  @apply bg-gray-50;
+}

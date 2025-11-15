@@ -58,12 +58,12 @@ function mytheme_enqueue_assets()
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_assets');
 
 
-
 function mytheme_add_woocommerce_support()
 {
     add_theme_support('woocommerce');
 }
 add_action('after_setup_theme', 'mytheme_add_woocommerce_support');
+
 
 class FS_Walker_Nav_Menu extends Walker_Nav_Menu
 {
@@ -221,3 +221,7 @@ function custom_update_cart_quantity()
         'cart_count' => WC()->cart->get_cart_contents_count()
     ));
 }
+
+add_filter('woocommerce_logout_redirect', function($redirect) {
+    return home_url(); 
+});

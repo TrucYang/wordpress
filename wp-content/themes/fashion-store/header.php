@@ -52,7 +52,7 @@
                                     Hello, <?php echo esc_html($current_user->display_name); ?>
                                     <ul class="onhover-show-div">
                                         <li><a href="<?php echo wc_get_page_permalink('myaccount'); ?>">My Account</a></li>
-                                        <li><a href="<?php echo wp_logout_url(get_permalink()); ?>">Logout</a></li>
+                                        <li><a href="<?php echo wc_get_account_endpoint_url('customer-logout'); ?>">Logout</a></i>
                                     </ul>
                                 <?php else: ?>
                                     My Account

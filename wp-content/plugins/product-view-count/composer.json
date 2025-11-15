@@ -1,0 +1,20 @@
+{
+    "name": "WPPlugines/Product_View_Count",
+    "authors": [
+        {
+            "name": "WPPlugines",
+            "email": "hi@wpplugines.io"
+        }
+    ],
+    "require": {
+        "codexpert/plugin": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPPlugines\\Product_View_Count\\" : "classes/",
+            "WPPlugines\\Product_View_Count\\App\\" : "app/",
+            "WPPlugines\\Product_View_Count\\API\\" : "api/"
+        },
+        "files": [ "inc/functions.php" ]
+    }
+}
