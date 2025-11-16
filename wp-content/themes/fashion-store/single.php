@@ -22,7 +22,7 @@
         <?php
         if (have_posts()) {
             while (have_posts()) {
-                the_post(); 
+                the_post();
                 ?>
                 <div class="blog-detail">
                     <?php if (has_post_thumbnail()): ?>
@@ -43,7 +43,13 @@
             }
         }
         ?>
+        <?php
+        if (comments_open() || get_comments_number()):
+            comments_template();
+        endif;
+        ?>
     </div>
+
 </section>
 
 <!--Section ends-->
