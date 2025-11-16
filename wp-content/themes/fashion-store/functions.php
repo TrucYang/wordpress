@@ -222,8 +222,8 @@ function custom_update_cart_quantity()
     ));
 }
 
-add_filter('woocommerce_logout_redirect', function($redirect) {
-    return home_url(); 
+add_filter('woocommerce_logout_redirect', function ($redirect) {
+    return home_url();
 });
 
 //checkout
@@ -243,17 +243,19 @@ add_action('wp_ajax_apply_custom_coupon', 'apply_custom_coupon');
 add_action('wp_ajax_nopriv_apply_custom_coupon', 'apply_custom_coupon');
 
 
-function apply_custom_coupon(){
-    if(!isset($_POST['coupon_code'])) wp_send_json_error(['message' => 'No coupon code provided']);
-    
+function apply_custom_coupon()
+{
+    if (!isset($_POST['coupon_code']))
+        wp_send_json_error(['message' => 'No coupon code provided']);
+
     $coupon_code = sanitize_text_field($_POST['coupon_code']);
-    if( WC()->cart->has_discount($coupon_code) ){
+    if (WC()->cart->has_discount($coupon_code)) {
         wp_send_json_error(['message' => 'Coupon already applied']);
     }
 
     $applied = WC()->cart->apply_coupon($coupon_code);
 
-    if($applied){
+    if ($applied) {
         WC()->cart->calculate_totals();
         wp_send_json_success(['message' => 'Coupon applied successfully!']);
     } else {
@@ -261,8 +263,9 @@ function apply_custom_coupon(){
     }
 }
 
-function enqueue_custom_checkout_js() {
-    if( is_checkout() ) {
+function enqueue_custom_checkout_js()
+{
+    if (is_checkout()) {
         wp_enqueue_script(
             'custom-checkout-js',
             get_template_directory_uri() . '/assets/js/coupon.js',
@@ -274,5 +277,68 @@ function enqueue_custom_checkout_js() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_checkout_js');
 
-// order-tracking
 
+//cancel order
+add_action('wp_ajax_cancel_customer_order', 'cancel_customer_order');
+add_action('wp_ajax_nopriv_cancel_customer_order', 'cancel_customer_order');
+
+function cancel_customer_order() {
+    check_ajax_referer('cancel_order_nonce', 'nonce');
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error(['message' => 'You must be logged in.']);
+    }
+
+    $order_id = intval($_POST['order_id']);
+    $order = wc_get_order($order_id);
+
+    if (!$order) {
+        wp_send_json_error(['message' => 'Order not found.']);
+    }
+
+    if ($order->get_user_id() != get_current_user_id()) {
+        wp_send_json_error(['message' => 'Permission denied.']);
+    }
+
+    if (!in_array($order->get_status(), ['pending','on-hold','failed'])) {
+        wp_send_json_error(['message' => 'This order cannot be cancelled.']);
+    }
+
+    $order->update_status('cancelled', 'Order cancelled by customer.');
+
+    wp_send_json_success([
+        'message' => 'Order cancelled successfully.'
+    ]);
+}
+
+add_filter('woocommerce_my_account_my_orders_actions', 'add_cancel_order_action', 10, 2);
+function add_cancel_order_action($actions, $order) {
+    if (in_array($order->get_status(), ['pending','on-hold','failed'])) {
+        $actions['cancel'] = [
+            'url'  => '#', 
+            'name' => '<span class="cancel-order-btn" data-order-id="' . $order->get_id() . '"><i class="ri-close-circle-line"></i></span>',
+        ];
+    }
+    return $actions;
+}
+
+
+function mytheme_enqueue_cancel_order_js() {
+    if( is_account_page() ) { 
+        wp_enqueue_script(
+            'cancel-order-js',
+            get_template_directory_uri() . '/assets/js/cancel-order.js',
+            array('jquery'),
+            null,
+            true
+        );
+
+        wp_localize_script('cancel-order-js', 'cancelOrderData', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('cancel_order_nonce'),
+            'confirm_message' => 'Are you sure you want to cancel this order?',
+            'error_message' => 'Something went wrong, please try again.'
+        ));
+    }
+}
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_cancel_order_js');
