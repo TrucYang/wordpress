@@ -47,6 +47,11 @@ $avatar_letter = strtoupper( substr( $user->display_name, 0, 1 ) );
                     <i class="ri-file-text-line"></i> My Orders
                 </button>
             </li>
+            <li role="presentation" class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-reviews">
+                    <i class="ri-star-line"></i> My Reviews
+                </button>
+            </li>
             <li role="presentation" class="nav-item logout-cls">
                 <a href="<?php echo wc_logout_url(); ?>" class="btn loagout-btn">
                     <i class="ri-logout-box-r-line"></i> Logout

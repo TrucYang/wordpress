@@ -342,3 +342,23 @@ function mytheme_enqueue_cancel_order_js() {
     }
 }
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_cancel_order_js');
+
+// Enable product reviews
+add_filter('woocommerce_product_review_comment_form_args', 'fs_custom_review_form');
+function fs_custom_review_form($comment_form) {
+    return $comment_form;
+}
+
+// Enqueue review scripts
+function fs_enqueue_review_scripts() {
+    if (is_product() || is_account_page()) {
+        wp_enqueue_script(
+            'product-reviews-js',
+            get_template_directory_uri() . '/assets/js/product-reviews.js',
+            array('jquery'),
+            null,
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'fs_enqueue_review_scripts');
