@@ -22,7 +22,10 @@ do_action('woocommerce_before_account_navigation');
                     <!-- TAB 2: NOTIFICATIONS -->
                     <?php wc_get_template('myaccount/orders.php'); ?>
 
-                    <!-- TAB 3: ORDERS -->
+                    <!-- TAB 3: REVIEWS -->
+                    <?php wc_get_template('myaccount/reviews.php'); ?>
+
+                    <!-- TAB 4: ORDERS -->
                     <?php wc_get_template('myaccount/notifications.php'); ?>
                 </div>
 
