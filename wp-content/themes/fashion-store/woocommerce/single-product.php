@@ -79,29 +79,24 @@ if (have_posts()):
                                     <h2 class="main-title"><?php the_title(); ?></h2>
 
                                     <div class="product-rating">
-    <div class="rating-list">
-        <?php
-        $average = $product->get_average_rating();
-        for ($i = 1; $i <= 5; $i++) {
-            echo $i <= $average ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
-        }
-        ?>
-    </div>
-    <span class="divider">|</span>
-    <a href="#!"><?php echo $product->get_review_count(); ?> Reviews</a>
-    <span class="divider">|</span>
-    <span>
-        <?php
-        $views = get_post_meta(get_the_ID(), '_product_views', true);
-        echo $views ? $views : 0;
-        ?> Views
-    </span>
-</div>
-
-
-
-
-
+                                        <div class="rating-list">
+                                            <?php
+                                                $average = $product->get_average_rating();
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    echo $i <= $average ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
+                                                }
+                                            ?>
+                                        </div>
+                                        <span class="divider">|</span>
+                                        <a href="#!"><?php echo $product->get_review_count(); ?> Reviews</a>
+                                        <span class="divider">|</span>
+                                        <span>
+                                            <?php
+                                                $views = get_post_meta(get_the_ID(), 'product_view_count', true);
+                                                echo $views ? $views : 0;
+                                            ?> Views
+                                        </span>
+                                    </div>
 
                                     <div class="price-text">
                                         <h3><span class="fw-normal d-inline">MRP:
@@ -229,7 +224,6 @@ if (have_posts()):
                                                     <input type="number" name="quantity" class="form-control input-number"
                                                         value="1" min="1" <?php echo $max_qty ? 'max="' . $max_qty . '"' : ''; ?>
                                                         <?php echo !$in_stock ? 'disabled' : ''; ?>>
-
                                                     <span class="input-group-prepend">
                                                         <button type="button" class="btn quantity-right-plus" data-type="plus"
                                                             data-field="quantity">
