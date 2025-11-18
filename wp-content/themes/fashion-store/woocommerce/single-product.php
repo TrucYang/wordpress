@@ -241,13 +241,13 @@ if (have_posts()):
                                         </div>
                                     </div>
 
-                                    <div class="product-buttons">
+                                    <!-- <div class="product-buttons">
                                         <div class="d-flex align-items-center gap-3">
                                             <button class="btn btn-animation btn-solid hover-solid scroll-button disabled"
                                                 type="button"> Out Of Stock </button>
                                             <a href="#!" class="btn btn-solid buy-button disabled">Buy Now</a>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="left-progressbar w-100">
                                         <h6>Please Hurry Only <?php echo $product->get_stock_quantity(); ?> Left In Stock</h6>
@@ -259,11 +259,43 @@ if (have_posts()):
                                     </div>
 
                                     <div class="buy-box justify-content-center gap-3">
-                                        <a href="#!"><i class="ri-heart-line"></i><span>Add To Wishlist</span></a>
+                                        <!-- <a href="#!"><i class="ri-heart-line"></i><span>Add To Wishlist</span></a> -->
+                                        <?php
+                                        echo do_shortcode('[yith_wcwl_add_to_wishlist custom_classes="wishlist-icon" label_add="" label_added="" label_exists=""]');
+                                        ?>
                                         <a href="#!" class="add-compare"><i class="ri-refresh-line"></i><span>Add To
                                                 Compare</span></a>
-                                        <a href="#share" data-bs-toggle="modal"><i
-                                                class="ri-share-line"></i><span>Share</span></a>
+                                        <a href="#share" id="product-share-btn" class="product-share-btn" style="position:relative;">
+                                            <i class="ri-share-line"></i><span>Share</span>
+                                        </a>
+                                        <div id="share-popup" class="share-popup" style="display:none; position:absolute; z-index:999;">
+                                            <?php echo do_shortcode('[addtoany]'); ?>
+                                        </div>
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var btn = document.getElementById('product-share-btn');
+                                            var popup = document.getElementById('share-popup');
+                                            if (btn && popup) {
+                                                btn.addEventListener('click', function(e) {
+                                                    e.preventDefault();
+                                                    if (popup.style.display === "none" || popup.style.display === "") {
+                                                        popup.style.display = "block";
+                                                        var rect = btn.getBoundingClientRect();
+                                                        popup.style.top = (btn.offsetTop + btn.offsetHeight + 8) + "px";
+                                                        popup.style.left = btn.offsetLeft + "px";
+                                                    } else {
+                                                        popup.style.display = "none";
+                                                    }
+                                                });
+                                                // ẩn popup khi click ra ngoài
+                                                document.addEventListener('click', function(e){
+                                                    if (!btn.contains(e.target) && !popup.contains(e.target)) {
+                                                        popup.style.display = "none";
+                                                    }
+                                                });
+                                            }
+                                        });
+                                        </script>
                                     </div>
                                 </div>
                             </div>

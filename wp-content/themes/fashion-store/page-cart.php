@@ -38,199 +38,71 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <a href="product-page(accordian).html">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/17.jpg" class="img-fluid" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="product-page(accordian).html">Orange Coords Set</a>
-                            <div class="mobile-cart-content row">
-                                <div class="col">
-                                    <div class="qty-box">
-                                        <div class="input-group qty-container">
-                                            <button class="btn qty-btn-minus">
-                                                <i class="ri-arrow-left-s-line"></i>
-                                            </button>
-                                            <input type="number" readonly="" name="qty"
-                                                class="form-control input-qty" value="1">
-                                            <button class="btn qty-btn-plus">
-                                                <i class="ri-arrow-right-s-line"></i>
-                                            </button>
+                    <?php
+                    if (WC()->cart->get_cart_contents_count() == 0) {
+                        echo '<tr><td colspan="6" class="text-center">Không có sản phẩm nào trong giỏ.</td></tr>';
+                    } else {
+                        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):
+                            $_product = $cart_item['data'];
+                            $product_id = $cart_item['product_id'];
+                            ?>
+                            <tr>
+                                <td>
+                                    <a href="<?php echo get_permalink($product_id); ?>">
+                                        <?php echo $_product->get_image('thumbnail'); ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="<?php echo get_permalink($product_id); ?>">
+                                        <?php echo $_product->get_name(); ?>
+                                    </a>
+                                </td>
+                                <td class="table-price">
+                                    <h2><?php echo wc_price($_product->get_price()); ?></h2>
+                                </td>
+                                <td>
+                                    <form action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
+                                        <div class="qty-box">
+                                            <div class="input-group qty-container">
+                                                <button type="submit" name="update_cart" value="1" class="btn qty-btn-minus"
+                                                    onclick="this.form.quantity.value = Math.max(1, parseInt(this.form.quantity.value)-1)">
+                                                    <i class="ri-arrow-left-s-line"></i>
+                                                </button>
+                                                <input type="number" name="cart[<?php echo $cart_item_key; ?>][qty]" min="1"
+                                                    class="form-control input-qty"
+                                                    value="<?php echo esc_attr($cart_item['quantity']); ?>">
+                                                <button type="submit" name="update_cart" value="1" class="btn qty-btn-plus"
+                                                    onclick="this.form.quantity.value = parseInt(this.form.quantity.value)+1">
+                                                    <i class="ri-arrow-right-s-line"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col table-price">
-                                    <h2 class="td-color">$15.00</h2>
-                                </div>
-                                <div class="col">
+                                    </form>
+                                </td>
+                                <td>
                                     <h2 class="td-color">
-                                        <a href="product-page(accordian).html" class="icon remove-btn">
-                                            <i class="ri-close-line"></i>
-                                        </a>
+                                        <?php echo wc_price($cart_item['line_total']); ?>
                                     </h2>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="table-price">
-                            <h2>$15.00</h2>
-                        </td>
-                        <td>
-                            <div class="qty-box">
-                                <div class="input-group qty-container">
-                                    <button class="btn qty-btn-minus">
-                                        <i class="ri-arrow-left-s-line"></i>
-                                    </button>
-                                    <input type="number" readonly="" name="qty" class="form-control input-qty"
-                                        value="1">
-                                    <button class="btn qty-btn-plus">
-                                        <i class="ri-arrow-right-s-line"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <h2 class="td-color">$15.00</h2>
-                        </td>
-                        <td>
-                            <a href="#!" class="icon remove-btn">
-                                <i class="ri-close-line"></i>
-                            </a>
-                        </td>
-                    </tr>
+                                </td>
+                                <td>
+                                    <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>"
+                                        class="icon remove-btn" title="Xóa sản phẩm">
+                                        <i class="ri-close-line"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                        endforeach;
+                    }
+                    ?>
                 </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <a href="product-page(accordian).html">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/product/18.jpg" class="img-fluid" alt="">
-                            </a>
-                        </td>
-                        <td><a href="product-page(accordian).html">Tan Cargo Shorts</a>
-                            <div class="mobile-cart-content row">
-                                <div class="col">
-                                    <div class="qty-box">
-                                        <div class="input-group qty-container">
-                                            <button class="btn qty-btn-minus">
-                                                <i class="ri-arrow-left-s-line"></i>
-                                            </button>
-                                            <input type="number" readonly="" name="qty"
-                                                class="form-control input-qty" value="3">
-                                            <button class="btn qty-btn-plus">
-                                                <i class="ri-arrow-right-s-line"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col table-price">
-                                    <h2 class="td-color">$9.96 <del>$12.00</del></h2>
-                                </div>
-                                <div class="col">
-                                    <h2 class="td-color">
-                                        <a href="#!" class="icon remove-btn">
-                                            <i class="ri-close-line"></i>
-                                        </a>
-                                    </h2>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="table-price">
-                            <h2>$9.96 <del>$12.00</del></h2>
-                            <h6 class="theme-color">You Save : $2.04</h6>
-                        </td>
-                        <td>
-                            <div class="qty-box">
-                                <div class="input-group qty-container">
-                                    <button class="btn qty-btn-minus">
-                                        <i class="ri-arrow-left-s-line"></i>
-                                    </button>
-                                    <input type="number" readonly="" name="qty" class="form-control input-qty"
-                                        value="3">
-                                    <button class="btn qty-btn-plus">
-                                        <i class="ri-arrow-right-s-line"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <h2 class="td-color">$29.88</h2>
-                        </td>
-                        <td>
-                            <a href="#!" class="icon remove-btn">
-                                <i class="ri-close-line"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <a href="product-page(accordian).html">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/product-details/product/17.jpg" class="img-fluid" alt="">
-                            </a>
-                        </td>
-                        <td><a href="product-page(accordian).html">Gym Coords Set (Brown)</a>
-                            <div class="mobile-cart-content row">
-                                <div class="col">
-                                    <div class="qty-box">
-                                        <div class="input-group qty-container">
-                                            <button class="btn qty-btn-minus">
-                                                <i class="ri-arrow-left-s-line"></i>
-                                            </button>
-                                            <input type="number" readonly="" name="qty"
-                                                class="form-control input-qty" value="1">
-                                            <button class="btn qty-btn-plus">
-                                                <i class="ri-arrow-right-s-line"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col table-price">
-                                    <h2 class="td-color">$63.00</h2>
-                                </div>
-                                <div class="col">
-                                    <h2 class="td-color">
-                                        <a href="#!" class="icon remove-btn">
-                                            <i class="ri-close-line"></i>
-                                        </a>
-                                    </h2>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="table-price">
-                            <h2>$20.00</h2>
-                        </td>
-                        <td>
-                            <div class="qty-box">
-                                <div class="input-group qty-container">
-                                    <button class="btn qty-btn-minus">
-                                        <i class="ri-arrow-left-s-line"></i>
-                                    </button>
-                                    <input type="number" readonly="" name="qty" class="form-control input-qty"
-                                        value="1">
-                                    <button class="btn qty-btn-plus">
-                                        <i class="ri-arrow-right-s-line"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <h2 class="td-color">$20.00</h2>
-                        </td>
-                        <td>
-                            <a href="#!" class="icon remove-btn">
-                                <i class="ri-close-line"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
+
                 <tfoot>
                     <tr>
-                        <td colspan="4" class="d-md-table-cell d-none">total price :</td>
-                        <td class="d-md-none">total price :</td>
+                        <td colspan="4" class="d-md-table-cell d-none">Tổng cộng :</td>
+                        <td class="d-md-none">Tổng cộng :</td>
                         <td>
-                            <h2>$64.88</h2>
+                            <h2><?php echo WC()->cart->get_cart_total(); ?></h2>
                         </td>
                     </tr>
                 </tfoot>

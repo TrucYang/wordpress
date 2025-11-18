@@ -362,3 +362,17 @@ function fs_enqueue_review_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'fs_enqueue_review_scripts');
+
+// Tùy chỉnh metadata cho social sharing
+// add_action('wp_head', 'custom_og_product_info');
+// function custom_og_product_info() {
+//     if (is_product()) {
+//         global $product;
+//         $price = $product->get_price_html();
+//         $title = $product->get_name();
+//         $url = get_permalink($product->get_id());
+//         echo '<meta property="og:title" content="'.esc_attr($title).' - Price: '.$price.'" />';
+//         echo '<meta property="og:description" content="Check out this product!"/>';
+//         echo '<meta property="og:url" content="'.esc_url($url).'" />';
+//     }
+// }
