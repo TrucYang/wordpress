@@ -1,0 +1,91 @@
+.fs-sales-noti {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    padding: 12px;
+    font-family: "Segoe UI", sans-serif;
+    color: #333;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(50px);
+    display: flex;          
+    align-items: center;   
+    animation: fs-slide-up 0.5s forwards;
+}
+
+.fs-thumb {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    margin-right: 12px;
+}
+
+.fs-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.fs-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.fs-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.fs-product {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.fs-view-item {
+    font-size: 12px;
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.fs-view-item:hover {
+    text-decoration: underline;
+}
+
+.fs-time {
+    font-size: 11px;
+    color: #888;
+}
+
+@keyframes fs-slide-up {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.fs-fade-out {
+    animation: fs-fade-out 0.5s forwards;
+}
+
+@keyframes fs-fade-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(50px); }
+}
+
+@media (max-width: 768px) {
+    .fs-sales-noti {
+        left: 50%;
+        transform: translateX(-50%) translateY(50px);
+        max-width: 90%;
+    }
+    .fs-sales-noti {
+        flex-direction: row; 
+    }
+}

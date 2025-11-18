@@ -146,7 +146,8 @@ $shipping = $order->get_address('shipping');
                         <div class="col-md-12">
                             <div class="delivery-sec">
                                 <h3>Expected delivery date:
-                                    <span><?php echo date_i18n('F j, Y', strtotime('+5 days')); ?></span></h3>
+                                    <span><?php echo date_i18n('F j, Y', strtotime('+5 days')); ?></span>
+                                </h3>
                                 <a href="<?php echo esc_url(home_url('/order-tracking')); ?>">Track Order</a>
                             </div>
                         </div>
@@ -157,3 +158,9 @@ $shipping = $order->get_address('shipping');
     </div>
 </section>
 <!-- Section ends -->
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        fs_show_notification_immediately(<?php echo json_encode($notif); ?>);
+    });
+</script>
