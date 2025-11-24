@@ -28,46 +28,9 @@
                 </div>
             </div>
             <div class="col-lg-7">
-                <form class="theme-form contact-form">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="form-box">
-                                <label for="name" class="form-label">Full Name</label>
-                                <input type="text" id="name" class="form-control" placeholder="Full Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-box">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" class="form-control" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-box">
-                                <label for="review">Phone</label>
-                                <input type="number" id="review" class="form-control"
-                                    placeholder="Enter Your Phone Number">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-box">
-                                <label for="email">Subject</label>
-                                <input type="text" id="last-name" class="form-control" placeholder="Subject">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-box">
-                                <label for="review">Write Your Message</label>
-                                <textarea rows="6" class="form-control" placeholder="Write Your Message"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-box">
-                                <button class="btn btn-solid" type="button">Send Your Message</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+            <div class="theme-form contact-form">
+               <?php echo do_shortcode('[contact-form-7 id="2f8611c" title="Email Support"]')?>
+               </div>   
             </div>
             <div class="col-12">
                 <div class="contact-right">
