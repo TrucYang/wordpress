@@ -1174,6 +1174,20 @@
 <!-- service layout  end -->
 
 
+<!-- register for new items -->
+<section class="pt-0 full-banner">
+    <div class="banner-wrapper">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-3/full-banner/3.png" alt=""
+            class="img-fluid blur-up lazyload full-width-banner">
+        <div class="form-overlay">
+            <p>Enter your email to receive information about our new products</p>
+            <?php echo do_shortcode('[fluentform id="5"]'); ?>
+        </div>
+    </div>
+</section>
+<!-- register for new items end -->
+
+
 <!-- blog section -->
 <div class="container">
     <div class="row">
@@ -1272,93 +1286,6 @@
     </div>
 </section>
 <!-- blog section end -->
-
-
-<!-- instagram section -->
-<section class="instagram ratio_square">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 p-0">
-                <h2 class="title-borderless">#whowearwhat</h2>
-                <div class="slide-7 no-arrow slick-instagram">
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/1.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/2.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/3.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/4.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/5.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/6.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/7.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#!">
-                            <div class="instagram-box"> <img
-                                    src="<?php echo get_template_directory_uri(); ?>/assets/images/fashion-1/instagram/4.png"
-                                    class="bg-img" alt="img">
-                                <div class="overlay"><i class="ri-instagram-fill"></i></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- instagram section end -->
 
 
 <!--  logo section -->

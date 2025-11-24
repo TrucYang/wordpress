@@ -6,11 +6,7 @@ function fs_theme_setup()
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('automatic-feed-links');
-    add_theme_support('custom-logo', array(
-        'height' => 100,
-        'width' => 100,
-    ));
-    // cho logo
+    add_theme_support('custom-logo');// cho logo
     add_theme_support('html5', array('search-form', 'comment-form', 'gallery', 'caption'));
     add_theme_support('woocommerce'); // support woocommerce
     add_image_size('fs-archive-thumb', 400, 300, true);
