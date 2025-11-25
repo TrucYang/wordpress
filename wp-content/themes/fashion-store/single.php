@@ -37,6 +37,10 @@
                 </div>
 
                 <div class="blog-detail-contain">
+                    <?php 
+                    // Render Page Builder Components
+                    fs_render_page_components();
+                    ?>
                     <?php the_content(); ?>
                 </div>
                 <?php
@@ -49,7 +53,6 @@
         endif;
         ?>
     </div>
-
 </section>
 
 <!--Section ends-->

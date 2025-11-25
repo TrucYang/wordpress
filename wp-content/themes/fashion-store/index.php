@@ -1,5 +1,6 @@
 <?php get_header(); ?>
 
+<?php if (fs_is_section_enabled('home_slider')): ?>
 <!-- Home slider -->
 <section class="p-0">
     <div class="slide-1 home-slider">
@@ -18,7 +19,9 @@
     </div>
 </section>
 <!-- Home slider end -->
+<?php endif; ?>
 
+<?php if (fs_is_section_enabled('collection_banner')): ?>
 <!-- collection banner -->
 <section class="pb-0 banner-section">
     <div class="container">
@@ -39,8 +42,10 @@
     </div>
 </section>
 <!-- collection banner end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('paragraph_section')): ?>
 <!-- Paragraph-->
 <div class="title1 section-t-space">
     <h4>special offer</h4>
@@ -57,25 +62,56 @@
     </div>
 </div>
 <!-- Paragraph end -->
+<?php endif; ?>
 
+<?php if (fs_is_section_enabled('product_slider')): ?>
 <!-- Product slider -->
 <section class="section-b-space pt-0 ratio_asos">
     <div class="container">
         <div class="g-3 g-md-4 row row-cols-2 row-cols-md-3 row-cols-xl-4">
             <?php
+            // Lấy settings từ Customizer
+            $product_count = fs_get_product_count();
+            $product_type = fs_get_product_type();
+            
+            // Xây dựng query args dựa trên loại sản phẩm
             $args = array(
                 'post_type' => 'product',
-                'posts_per_page' => 4,
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'product_visibility',
-                        'field' => 'name',
-                        'terms' => 'featured',
-                        'operator' => 'IN',
-                    ),
-                ),
+                'posts_per_page' => $product_count,
             );
-
+            
+            // Thêm điều kiện dựa trên loại sản phẩm
+            switch ($product_type) {
+                case 'featured':
+                    $args['tax_query'] = array(
+                        array(
+                            'taxonomy' => 'product_visibility',
+                            'field' => 'name',
+                            'terms' => 'featured',
+                            'operator' => 'IN',
+                        ),
+                    );
+                    break;
+                case 'sale':
+                    $args['meta_query'] = array(
+                        array(
+                            'key' => '_sale_price',
+                            'value' => '',
+                            'compare' => '!='
+                        )
+                    );
+                    break;
+                case 'best_selling':
+                    $args['meta_key'] = 'total_sales';
+                    $args['orderby'] = 'meta_value_num';
+                    $args['order'] = 'DESC';
+                    break;
+                case 'recent':
+                default:
+                    $args['orderby'] = 'date';
+                    $args['order'] = 'DESC';
+                    break;
+            }
 
             $query = new WP_Query($args);
 
@@ -200,8 +236,10 @@
     </div>
 </section>
 <!-- Product slider end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('full_banner')): ?>
 <!-- full banner -->
 <section class="pt-0">
     <a href="category-page.html">
@@ -210,8 +248,10 @@
     </a>
 </section>
 <!-- full banner end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('tab_product')): ?>
 <!-- Tab product -->
 <div class="title1 section-t-space">
     <h4>exclusive products</h4>
@@ -1091,8 +1131,10 @@
     </div>
 </section>
 <!-- Tab product end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('service_layout')): ?>
 <!-- service layout -->
 <div class="container">
     <section class="service border-section small-section">
@@ -1172,8 +1214,10 @@
     </section>
 </div>
 <!-- service layout  end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('register_form')): ?>
 <!-- register for new items -->
 <section class="pt-0 full-banner">
     <div class="banner-wrapper">
@@ -1186,8 +1230,10 @@
     </div>
 </section>
 <!-- register for new items end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('blog_section')): ?>
 <!-- blog section -->
 <div class="container">
     <div class="row">
@@ -1286,8 +1332,10 @@
     </div>
 </section>
 <!-- blog section end -->
+<?php endif; ?>
 
 
+<?php if (fs_is_section_enabled('logo_section')): ?>
 <!--  logo section -->
 <section class="section-b-space">
     <div class="container">
@@ -1356,5 +1404,6 @@
     </div>
 </section>
 <!--  logo section end-->
+<?php endif; ?>
 
 <?php get_footer(); ?>

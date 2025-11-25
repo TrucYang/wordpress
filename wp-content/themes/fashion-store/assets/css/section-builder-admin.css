@@ -1,0 +1,246 @@
+/* Wrapper */
+.fs-section-builder-wrapper {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.fs-builder-toolbar {
+    border-bottom: 1px solid #dcdcde;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    background: #f8f9fa;
+}
+
+.fs-builder-search {
+    min-width: 250px;
+}
+
+.fs-builder-body {
+    display: grid;
+    grid-template-columns: 220px 1fr 320px;
+    gap: 15px;
+    padding: 15px;
+}
+
+.fs-panel {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.fs-panel-title {
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 1px solid #dcdcde;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fs-panel-subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: #7a7a7a;
+}
+
+.fs-panel.fs-panel-library,
+.fs-panel.fs-panel-settings {
+    background: #fcfcfc;
+}
+
+.fs-block-library {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fs-block-library-card {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fff;
+}
+
+.fs-block-library-card h4 {
+    margin: 0 0 4px;
+    font-size: 13px;
+}
+
+.fs-block-library-card p {
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: #6c6c6c;
+}
+
+.fs-panel-canvas {
+    background: #fff;
+}
+
+.fs-canvas-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.fs-canvas-item {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.fs-canvas-item:last-child {
+    border-bottom: 0;
+}
+
+.fs-canvas-item.is-selected {
+    background: #f0f6ff;
+}
+
+.fs-canvas-item-title {
+    font-weight: 600;
+    flex: 1;
+}
+
+.fs-canvas-item-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.fs-canvas-empty-state {
+    padding: 20px;
+    text-align: center;
+    color: #7a7a7a;
+    border-top: 1px dashed #dcdcde;
+}
+
+.fs-panel-settings {
+    background: #fff;
+}
+
+.fs-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px;
+}
+
+.fs-settings-empty {
+    color: #7a7a7a;
+}
+
+.fs-field-group {
+    margin-bottom: 16px;
+}
+
+.fs-field-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.fs-field-group input[type="text"],
+.fs-field-group input[type="number"],
+.fs-field-group input[type="url"],
+.fs-field-group select,
+.fs-field-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fs-field-description {
+    font-size: 12px;
+    color: #6c6c6c;
+    margin-top: 4px;
+}
+
+.fs-repeater {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 8px;
+    background: #fdfdfd;
+}
+
+.fs-repeater-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fs-repeater-item {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fff;
+    position: relative;
+}
+
+.fs-repeater-item-actions {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    gap: 4px;
+}
+
+.fs-builder-json {
+    border-top: 1px solid #dcdcde;
+    padding: 15px;
+    background: #f8f9fa;
+}
+
+.fs-builder-json textarea {
+    width: 100%;
+    min-height: 160px;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.fs-builder-json-hidden {
+    display: none;
+}
+
+.fs-image-preview {
+    margin-top: 8px;
+}
+
+.fs-image-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+}
+
+.fs-switch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fs-canvas-item-handle {
+    cursor: move;
+    color: #7a7a7a;
+}
+
+@media (max-width: 1200px) {
+    .fs-builder-body {
+        grid-template-columns: 1fr;
+    }
+
+    .fs-panel {
+        min-height: auto;
+    }
+}
+

@@ -1,0 +1,84 @@
+.fs-page-sections-wrapper {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background: #fff;
+    padding: 15px;
+}
+
+.fs-page-sections-panels {
+    display: flex;
+    gap: 20px;
+}
+
+.fs-panel-available,
+.fs-panel-selected {
+    flex: 1;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 12px;
+    background: #fdfdfd;
+}
+
+.fs-panel-available h4,
+.fs-panel-selected h4 {
+    margin-top: 0;
+}
+
+#fs-section-search {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.fs-section-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    border: 1px solid #e2e4e7;
+    border-radius: 4px;
+}
+
+.fs-section-list li {
+    padding: 10px;
+    border-bottom: 1px solid #e2e4e7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+}
+
+.fs-section-list li:last-child {
+    border-bottom: 0;
+}
+
+.fs-section-list button {
+    white-space: nowrap;
+}
+
+.fs-section-meta {
+    font-size: 12px;
+    color: #6c6c6c;
+}
+
+.fs-selected-list .fs-section-item {
+    cursor: move;
+}
+
+.fs-selected-empty {
+    text-align: center;
+    margin-top: 10px;
+    color: #7a7a7a;
+}
+
+.fs-selected-list .fs-remove-section {
+    margin-left: auto;
+}
+
+@media (max-width: 900px) {
+    .fs-page-sections-panels {
+        flex-direction: column;
+    }
+}
+

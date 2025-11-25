@@ -1,0 +1,271 @@
+/* Page Builder Admin Styles */
+.fs-page-builder-wrapper {
+    margin: 20px 0;
+}
+
+.fs-pb-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    flex-wrap: wrap;
+}
+
+.fs-pb-toolbar .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fs-pb-toolbar .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.fs-pb-components-list {
+    min-height: 100px;
+}
+
+.fs-pb-empty {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+    background: #f9f9f9;
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+}
+
+.fs-pb-component {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.fs-pb-component:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.fs-pb-component.ui-sortable-helper {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transform: rotate(2deg);
+}
+
+.fs-pb-component-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    cursor: move;
+}
+
+.fs-pb-component-type {
+    background: #0073aa;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+.fs-pb-component-title {
+    flex: 1;
+    font-weight: 600;
+    color: #23282d;
+}
+
+.fs-pb-component-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fs-pb-component-actions .button-link {
+    padding: 0;
+    height: auto;
+    line-height: 1;
+    color: #555;
+    text-decoration: none;
+}
+
+.fs-pb-component-actions .button-link:hover {
+    color: #0073aa;
+}
+
+.fs-pb-component-actions .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.fs-drag-handle {
+    cursor: move;
+    color: #999;
+}
+
+.fs-drag-handle:hover {
+    color: #555;
+}
+
+.fs-pb-component-content {
+    padding: 20px;
+    background: #fff;
+}
+
+.fs-pb-component-form p {
+    margin-bottom: 15px;
+}
+
+.fs-pb-component-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #23282d;
+}
+
+.fs-pb-component-form input[type="text"],
+.fs-pb-component-form input[type="url"],
+.fs-pb-component-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.fs-pb-component-form textarea {
+    font-family: monospace;
+}
+
+.fs-image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fs-image-preview {
+    margin-top: 10px;
+}
+
+.fs-image-preview img {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px;
+    background: #f9f9f9;
+}
+
+.fs-pb-form-actions {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    gap: 10px;
+}
+
+.fs-pb-form-actions .button {
+    margin: 0;
+}
+
+/* Component types colors */
+.fs-pb-component[data-type="banner"] .fs-pb-component-type {
+    background: #00a0d2;
+}
+
+.fs-pb-component[data-type="image"] .fs-pb-component-type {
+    background: #46b450;
+}
+
+.fs-pb-component[data-type="text"] .fs-pb-component-type {
+    background: #f56e28;
+}
+
+.fs-pb-component[data-type="html"] .fs-pb-component-type {
+    background: #826eb4;
+}
+
+/* Frontend Styles */
+.fs-page-component {
+    margin: 30px 0;
+    padding: 20px 0;
+}
+
+.fs-component-banner {
+    position: relative;
+    overflow: hidden;
+}
+
+.fs-banner-image {
+    width: 100%;
+}
+
+.fs-banner-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.fs-banner-content {
+    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.fs-banner-title {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.fs-banner-description {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.fs-component-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.fs-text-title {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.fs-text-content {
+    line-height: 1.8;
+}
+
+.fs-text-content p {
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .fs-pb-toolbar {
+        flex-direction: column;
+    }
+    
+    .fs-pb-toolbar .button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .fs-pb-component-header {
+        flex-wrap: wrap;
+    }
+}
+
