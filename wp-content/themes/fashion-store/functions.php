@@ -373,3 +373,7 @@ add_action('wp_enqueue_scripts', 'fs_enqueue_review_scripts');
 //     }
 // }
 
+// Override link "Lost your password?" đẻ chuyển hướng về trang /login?action=lost_password
+add_filter('lostpassword_url', function($url, $redirect){
+    return site_url('/login?action=lost_password');
+}, 10, 2);

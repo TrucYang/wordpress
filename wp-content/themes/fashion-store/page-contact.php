@@ -29,7 +29,7 @@
             </div>
             <div class="col-lg-7">
             <div class="theme-form contact-form">
-               <?php echo do_shortcode('[contact-form-7 id="2f8611c" title="Email Support"]')?>
+               <?php echo do_shortcode('[fluentform id="6"]')?>
                </div>   
             </div>
             <div class="col-12">
